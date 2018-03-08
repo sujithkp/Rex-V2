@@ -61,5 +61,15 @@ namespace Rex.UI.Controllers
 
             return nodes;
         }
+
+        public IEnumerable<Row> GetRows (TableCollectionNode tableCollection)
+        {
+            return store.GetRows(tableCollection.Table, tableCollection.keys);
+        }
+
+        public Row GetRows(TableNode table)
+        {
+            return store.GetRow(table.Table, table.keys);
+        }
     }
 }

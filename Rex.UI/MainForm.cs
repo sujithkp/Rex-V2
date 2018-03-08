@@ -21,6 +21,47 @@ namespace Rex.UI
 
             treeView1.BeforeExpand += TreeView1_BeforeExpand;
             treeView1.BeforeSelect += TreeView1_BeforeSelect;
+            treeView1.AfterSelect += TreeView1_AfterSelect;
+        }
+
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node is TableCollectionNode)
+            {
+                var rows = controller.GetRows(e.Node as TableCollectionNode);
+                ShowChildren(rows);
+                return;
+            }
+
+            if (e.Node is TableNode)
+            {
+                var row = controller.GetRows(e.Node as TableNode);
+                dataGridView1.Columns.Clear();
+                dataGridView1.Rows.Clear();
+
+                dataGridView1.Columns.Add("Name", "Name");
+                dataGridView1.Columns.Add("Value", "Value");
+
+                foreach (var col in row.Columns)
+                    dataGridView1.Rows.Add(new string[] { col.Name, col.Value });
+
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            }
+        }
+
+        private void ShowChildren(IEnumerable<Row> rows)
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+
+            foreach (var col in rows.First().Columns)
+                dataGridView1.Columns.Add(col.Name, col.Name);
+
+            foreach (var row in rows)
+            {
+                var rowValues = row.Columns.Select(x => x.Value).ToArray();
+                dataGridView1.Rows.Add(rowValues);
+            }
         }
 
         private void TreeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
