@@ -13,7 +13,7 @@ namespace Rex.Business
 
         public DataStore()
         {
-            _dataAdapter = new SqlServer.Adapter.SqlServerAdapter("Data Source=SVRSQL1;Initial Catalog=Manufacturing;Persist Security Info=True;User ID=MdomUser;Password=HHeLiBe1");
+            _dataAdapter = new SqlServer.Adapter.SqlServerAdapter("Data Source=SVRSQL1;Initial Catalog=Northwind;Persist Security Info=True;User ID=MdomUser;Password=HHeLiBe1");
             _schema = new InformationSchema();
 
             Initialize();

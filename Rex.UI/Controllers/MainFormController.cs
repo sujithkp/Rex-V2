@@ -3,6 +3,7 @@ using Rex.Common.Data;
 using Rex.UI.Controls;
 using Rex.UI.Lib;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Rex.UI.Controllers
 {
@@ -45,9 +46,10 @@ namespace Rex.UI.Controllers
             var nodes = new List<RexNode>();
 
             var rows = store.GetRows(tableCollection.Table, tableCollection.keys);
-            var primaryCols = store.GetPrimaryColumns(tableCollection.Table);
+            // var primaryCols = store.GetPrimaryColumns(tableCollection.Table);
+            var primaryCols = (tableCollection.keys as ForeignKeySet).ForeignKeys.Select(x => x.Name);
 
-            foreach(var row in rows)
+            foreach (var row in rows)
             {
                 var pkeyForTargetTbl = new PrimaryKeySet();
                 foreach (var primaryCol in primaryCols)

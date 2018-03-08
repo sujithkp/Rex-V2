@@ -43,10 +43,10 @@ namespace Rex.UI
         private void MainForm_Load(object sender, EventArgs e)
         {
             var keySet = new PrimaryKeySet();
-            keySet.PrimaryKeys.Add(new ColumnValueSet("ID", "BC1000001"));
+            keySet.PrimaryKeys.Add(new ColumnValueSet("EmployeeID", "9"));
 
 
-            treeView1.Nodes.Add(new TableNode("Items","Items", keySet));
+            treeView1.Nodes.Add(new TableNode("Employees","Employees", keySet));
 
 
         }
