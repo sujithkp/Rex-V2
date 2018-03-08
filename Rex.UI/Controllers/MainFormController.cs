@@ -30,7 +30,7 @@ namespace Rex.UI.Controllers
                 nodes.Add(new TableNode(table.Target.Table, table.Target.Table, pkeyForTargetTbl));
             }
 
-            var referencingTabels = store.GetTablesReferencing(tableNode.Text);
+            var referencingTabels = store.GetTablesReferencing(tableNode.Table);
             foreach (var table in referencingTabels)
             {
                 var fkeyFortargetTbl = new ForeignKeySet();

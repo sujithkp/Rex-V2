@@ -5,7 +5,7 @@ namespace Rex.SqlServer.Store
 {
     public static class DataQueries
     {
-        private static string _rowQuery = "Select * from {0} where {1};";
+        private static string _rowQuery = "Select * from [{0}] where {1};";
 
         public static string GetRowQuery(string table, PrimaryKeySet primaryKeyset)
         {

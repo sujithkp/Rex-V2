@@ -15,6 +15,7 @@ namespace Rex.UI
         public MainForm()
         {
             InitializeComponent();
+            LoadSettings();
 
             this.controller = new MainFormController();
 
@@ -22,6 +23,11 @@ namespace Rex.UI
         }
 
         private MainFormController controller;
+
+        private void LoadSettings ()
+        {
+            singularizeToolStripMenuItem.Checked = Properties.Settings.Default.Singularize;
+        }
 
         private void TreeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
@@ -47,8 +53,14 @@ namespace Rex.UI
 
 
             treeView1.Nodes.Add(new TableNode("Employees","Employees", keySet));
+        }
 
+        private void singularizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            singularizeToolStripMenuItem.Checked = !singularizeToolStripMenuItem.Checked;
+            Properties.Settings.Default.Singularize = singularizeToolStripMenuItem.Checked;
 
+            Properties.Settings.Default.Save();
         }
     }
 }
