@@ -3,9 +3,7 @@ using Rex.UI.Controllers;
 using Rex.UI.Controls;
 using Rex.UI.Lib;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -111,7 +109,7 @@ namespace Rex.UI
             keySet.PrimaryKeys.Add(new ColumnValueSet("EmployeeID", "9"));
 
 
-            treeView1.Nodes.Add(new TableNode("Employees","Employees", keySet));
+            treeView1.Nodes.Add(new TableNode("Employees", "Employees", keySet));
         }
 
         private void singularizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,6 +132,11 @@ namespace Rex.UI
                + Environment.NewLine
                + "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString()
                , "About me.");
+        }
+
+        private void sqlServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.Connect();
         }
     }
 }

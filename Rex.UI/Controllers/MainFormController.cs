@@ -16,6 +16,11 @@ namespace Rex.UI.Controllers
             store = new DataStore();
         }
 
+        public void Connect()
+        {
+            store.Connect();
+        }
+
         public IList<RexNode> GetDependants(TableNode tableNode)
         {
             var nodes = new List<RexNode>();
@@ -46,8 +51,7 @@ namespace Rex.UI.Controllers
             var nodes = new List<RexNode>();
 
             var rows = store.GetRows(tableCollection.Table, tableCollection.keys);
-            // var primaryCols = store.GetPrimaryColumns(tableCollection.Table);
-            var primaryCols = (tableCollection.keys as ForeignKeySet).ForeignKeys.Select(x => x.Name);
+            var primaryCols = store.GetPrimaryColumns(tableCollection.Table);
 
             foreach (var row in rows)
             {
@@ -62,7 +66,7 @@ namespace Rex.UI.Controllers
             return nodes;
         }
 
-        public IEnumerable<Row> GetRows (TableCollectionNode tableCollection)
+        public IEnumerable<Row> GetRows(TableCollectionNode tableCollection)
         {
             return store.GetRows(tableCollection.Table, tableCollection.keys);
         }

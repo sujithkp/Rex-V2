@@ -13,5 +13,7 @@ namespace Rex.Common
         Row GetRow(string tableName, KeySet primaryKey);
 
         IEnumerable<Row> GetRows(string tableName, KeySet foreignKey);
+
+        void Connect();
     }
 }

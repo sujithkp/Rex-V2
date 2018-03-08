@@ -13,15 +13,23 @@ namespace Rex.Business
 
         public DataStore()
         {
-            _dataAdapter = new SqlServer.Adapter.SqlServerAdapter("Data Source=SVRSQL1;Initial Catalog=Northwind;Persist Security Info=True;User ID=MdomUser;Password=HHeLiBe1");
+            //_dataAdapter = new SqlServer.Adapter.SqlServerAdapter("Data Source=SVRSQL1;Initial Catalog=Northwind;Persist Security Info=True;User ID=MdomUser;Password=HHeLiBe1");
             _schema = new InformationSchema();
 
-            Initialize();
+            //Initialize();
         }
 
         void Initialize()
         {
             _schema.Initialize(_dataAdapter.GetReferentialConstraints());
+        }
+
+        public void Connect ()
+        {
+            _dataAdapter = new SqlServer.Adapter.SqlServerAdapter();
+            _dataAdapter.Connect();
+
+            Initialize();
         }
 
         public IList<TableColumnPair> GetTablesReferencedBy (string tableName)

@@ -1,6 +1,7 @@
 ﻿using Rex.Common;
 using Rex.Common.Data;
 using Rex.SqlServer.Business;
+using Rex.SqlServer.Controller;
 using Rex.SqlServer.Store;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,16 @@ namespace Rex.SqlServer.Adapter
 
         private RecordParser _recordParser;
 
-        public SqlServerAdapter(string connectionString)
+        public SqlServerAdapter()
         {
+
+        }
+
+        public void Connect ()
+        {
+            ConnectionStringFormController controller = new ConnectionStringFormController();
+            var connectionString = controller.GetConnectionString();
+
             _queryExecuter = new QueryExecuter(connectionString);
             _refparser = new ReferentialConstraintParser();
             _recordParser = new RecordParser();
