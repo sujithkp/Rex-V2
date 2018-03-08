@@ -20,6 +20,13 @@ namespace Rex.UI
             this.controller = new MainFormController();
 
             treeView1.BeforeExpand += TreeView1_BeforeExpand;
+            treeView1.BeforeSelect += TreeView1_BeforeSelect;
+        }
+
+        private void TreeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            var node = e.Node as RexNode;
+            statusStrip1.Items[0].Text = node.ToString();
         }
 
         private MainFormController controller;

@@ -27,7 +27,7 @@ namespace Rex.UI.Controllers
             {
                 var pkeyForTargetTbl = new PrimaryKeySet();
                 pkeyForTargetTbl.PrimaryKeys.Add(new ColumnValueSet(table.Target.Column, dataRow.GetValueFor(table.Source.Column)));
-                nodes.Add(new TableNode(table.Target.Table, table.Target.Table, pkeyForTargetTbl));
+                nodes.Add(new TableNode(table.Source.Column, table.Target.Table, pkeyForTargetTbl));
             }
 
             var referencingTabels = store.GetTablesReferencing(tableNode.Table);

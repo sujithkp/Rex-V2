@@ -1,12 +1,14 @@
 ﻿using Rex.Common;
-using System;
+using Rex.Common.Data;
+using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Rex.UI.Lib
 {
     public abstract class RexNode : TreeNode
     {
-        public RexNode(String text, KeySet keys)
+        public RexNode(string text, KeySet keys)
             : base(text)
         {
             this.keys = keys;
@@ -14,6 +16,11 @@ namespace Rex.UI.Lib
 
         public KeySet keys { get; private set; }
 
-        public String Table { get; protected set; }
+        public string Table { get; protected set; }
+
+        protected string BuildSelectionCriteria (IList<ColumnValueSet> columns)
+        {
+            return string.Join(",", columns.Select(x => x.Name + "=" + "'" + x.Value + "'"));
+        }
     }
 }
