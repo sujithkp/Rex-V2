@@ -5,7 +5,9 @@ using Rex.UI.Lib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -123,6 +125,15 @@ namespace Rex.UI
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Record Explorer (Rex)" + Environment.NewLine
+               + "Author: Sujith K P"
+               + Environment.NewLine
+               + "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString()
+               , "About me.");
         }
     }
 }
