@@ -119,5 +119,10 @@ namespace Rex.UI
 
             Properties.Settings.Default.Save();
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
