@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Rex.UI
@@ -17,6 +18,11 @@ namespace Rex.UI
             InitializeComponent();
             LoadSettings();
 
+            this.Load += MainForm_Load1;
+        }
+
+        private void MainForm_Load1(object sender, EventArgs e)
+        {
             this.controller = new MainFormController();
 
             treeView1.BeforeExpand += TreeView1_BeforeExpand;
@@ -35,12 +41,15 @@ namespace Rex.UI
 
             if (e.Node is TableNode)
             {
-                var row = controller.GetRows(e.Node as TableNode);
+                var task = Task.Factory.StartNew(() => controller.GetRows(e.Node as TableNode));
+
                 dataGridView1.Columns.Clear();
                 dataGridView1.Rows.Clear();
 
                 dataGridView1.Columns.Add("Name", "Name");
                 dataGridView1.Columns.Add("Value", "Value");
+
+                var row = task.Result;
 
                 foreach (var col in row.Columns)
                     dataGridView1.Rows.Add(new string[] { col.Name, col.Value });
