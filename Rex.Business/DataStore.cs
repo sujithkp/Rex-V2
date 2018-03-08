@@ -13,10 +13,7 @@ namespace Rex.Business
 
         public DataStore()
         {
-            //_dataAdapter = new SqlServer.Adapter.SqlServerAdapter("Data Source=SVRSQL1;Initial Catalog=Northwind;Persist Security Info=True;User ID=MdomUser;Password=HHeLiBe1");
             _schema = new InformationSchema();
-
-            //Initialize();
         }
 
         void Initialize()
@@ -24,15 +21,25 @@ namespace Rex.Business
             _schema.Initialize(_dataAdapter.GetReferentialConstraints());
         }
 
-        public void Connect ()
+        public bool Connect()
         {
             _dataAdapter = new SqlServer.Adapter.SqlServerAdapter();
-            _dataAdapter.Connect();
 
-            Initialize();
+            if (!_dataAdapter.Connect())
+                return false;
+
+            try
+            {
+                Initialize();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public IList<TableColumnPair> GetTablesReferencedBy (string tableName)
+        public IList<TableColumnPair> GetTablesReferencedBy(string tableName)
         {
             return _schema.GetReferencedTables(tableName);
         }
@@ -42,12 +49,12 @@ namespace Rex.Business
             return _schema.GetReferencingTables(tableName);
         }
 
-        public Row GetRow (string tableName, KeySet primaryKey)
+        public Row GetRow(string tableName, KeySet primaryKey)
         {
             return _dataAdapter.GetRow(tableName, primaryKey);
         }
 
-        public IEnumerable<Row> GetRows (string table, KeySet foreignKey)
+        public IEnumerable<Row> GetRows(string table, KeySet foreignKey)
         {
             return _dataAdapter.GetRows(table, foreignKey);
         }

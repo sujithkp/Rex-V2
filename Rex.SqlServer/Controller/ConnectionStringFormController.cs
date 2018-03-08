@@ -16,6 +16,9 @@ namespace Rex.SqlServer.Controller
             var password = form.Password;
             var database = form.DatabaseName;
 
+            if (dialogResult != System.Windows.Forms.DialogResult.OK)
+                return null;
+
             new ConnectionStringPersistor().Persist(connectionStringName, serverName, username, password);
 
             return new ConnectionStringBuilder().Build(serverName, database, username, password);

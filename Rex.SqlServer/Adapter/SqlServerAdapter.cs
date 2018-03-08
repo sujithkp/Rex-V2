@@ -22,14 +22,19 @@ namespace Rex.SqlServer.Adapter
 
         }
 
-        public void Connect ()
+        public bool Connect ()
         {
             ConnectionStringFormController controller = new ConnectionStringFormController();
             var connectionString = controller.GetConnectionString();
 
+            if (connectionString == null)
+                return false;
+
             _queryExecuter = new QueryExecuter(connectionString);
             _refparser = new ReferentialConstraintParser();
             _recordParser = new RecordParser();
+
+            return true;
         }
 
         public IEnumerable<string> GetAllTables()

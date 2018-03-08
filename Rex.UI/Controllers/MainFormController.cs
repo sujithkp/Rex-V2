@@ -11,18 +11,23 @@ namespace Rex.UI.Controllers
     {
         private DataStore store;
 
+        private bool IsConnected = false;
+
         public MainFormController()
         {
             store = new DataStore();
         }
 
-        public void Connect()
+        public bool Connect()
         {
-            store.Connect();
+            return IsConnected = store.Connect();
         }
 
         public IList<RexNode> GetDependants(TableNode tableNode)
         {
+            if (!IsConnected && !Connect())
+                return null;
+
             var nodes = new List<RexNode>();
 
             var dataRow = store.GetRow(tableNode.Table, tableNode.keys);
@@ -48,6 +53,9 @@ namespace Rex.UI.Controllers
 
         public IList<RexNode> GetDependants(TableCollectionNode tableCollection)
         {
+            if (!IsConnected && !Connect())
+                return null;
+
             var nodes = new List<RexNode>();
 
             var rows = store.GetRows(tableCollection.Table, tableCollection.keys);
@@ -68,11 +76,17 @@ namespace Rex.UI.Controllers
 
         public IEnumerable<Row> GetRows(TableCollectionNode tableCollection)
         {
+            if (!IsConnected && !Connect())
+                return null;
+
             return store.GetRows(tableCollection.Table, tableCollection.keys);
         }
 
         public Row GetRows(TableNode table)
         {
+            if (!IsConnected && !Connect())
+                return null;
+
             return store.GetRow(table.Table, table.keys);
         }
     }

@@ -105,11 +105,11 @@ namespace Rex.UI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var keySet = new PrimaryKeySet();
-            keySet.PrimaryKeys.Add(new ColumnValueSet("EmployeeID", "9"));
+            //var keySet = new PrimaryKeySet();
+            //keySet.PrimaryKeys.Add(new ColumnValueSet("EmployeeID", "9"));
 
 
-            treeView1.Nodes.Add(new TableNode("Employees", "Employees", keySet));
+            //treeView1.Nodes.Add(new TableNode("Employees", "Employees", keySet));
         }
 
         private void singularizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -136,7 +136,12 @@ namespace Rex.UI
 
         private void sqlServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.Connect();
+            conectToolStripMenuItem.Enabled = !controller.Connect();
+        }
+
+        private void addRecordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

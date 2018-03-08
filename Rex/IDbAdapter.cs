@@ -14,6 +14,6 @@ namespace Rex.Common
 
         IEnumerable<Row> GetRows(string tableName, KeySet foreignKey);
 
-        void Connect();
+        bool Connect();
     }
 }
