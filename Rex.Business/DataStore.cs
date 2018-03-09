@@ -1,7 +1,7 @@
 ﻿using Rex.Business.Store;
+using Rex.Business.UI;
 using Rex.Common;
 using Rex.Common.Data;
-using System;
 using System.Collections.Generic;
 
 namespace Rex.Business
@@ -28,15 +28,13 @@ namespace Rex.Business
             if (!_dataAdapter.Connect())
                 return false;
 
-            try
-            {
-                Initialize();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            Initialize();
             return true;
+        }
+
+        public void AddRecord()
+        {
+            new Controller.NewRecordFormController().GetRecordPrimaryKeySet();
         }
 
         public IList<TableColumnPair> GetTablesReferencedBy(string tableName)

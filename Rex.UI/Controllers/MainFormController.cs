@@ -23,6 +23,11 @@ namespace Rex.UI.Controllers
             return IsConnected = store.Connect();
         }
 
+        public void AddRecord ()
+        {
+            store.AddRecord();
+        }
+
         public IList<RexNode> GetDependants(TableNode tableNode)
         {
             if (!IsConnected && !Connect())

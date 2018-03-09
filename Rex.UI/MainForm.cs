@@ -137,11 +137,14 @@ namespace Rex.UI
         private void sqlServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             conectToolStripMenuItem.Enabled = !controller.Connect();
+
+            if (!conectToolStripMenuItem.Enabled)
+                statusStrip1.Items[0].Text = "Connected";
         }
 
         private void addRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            controller.AddRecord();
         }
     }
 }
