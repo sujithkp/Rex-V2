@@ -38,7 +38,6 @@ namespace Rex.Business.UI
             return this.PrimaryKeys;
         }
 
-
         public void ShowPrimaryColumns(IList<String> columns)
         {
             this.panel1.VerticalScroll.Enabled = true;
@@ -89,8 +88,6 @@ namespace Rex.Business.UI
 
             foreach (var col in cols)
                 dataGridView1.Rows.Add(new string[] { col, string.Empty });
-
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
     }
 }
