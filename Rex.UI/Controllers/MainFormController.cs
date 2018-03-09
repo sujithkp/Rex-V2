@@ -23,9 +23,9 @@ namespace Rex.UI.Controllers
             return IsConnected = store.Connect();
         }
 
-        public void AddRecord ()
+        public TablePrimaryKeys AddRecord()
         {
-            store.AddRecord();
+            return store.GetNewRecordKeys();
         }
 
         public IList<RexNode> GetDependants(TableNode tableNode)
@@ -64,16 +64,21 @@ namespace Rex.UI.Controllers
             var nodes = new List<RexNode>();
 
             var rows = store.GetRows(tableCollection.Table, tableCollection.keys);
+            if (rows.Count() == 0)
+                return null;
+
             var primaryCols = store.GetPrimaryColumns(tableCollection.Table);
+
+            if (primaryCols.Count() == 0)
+                primaryCols = store.GetForeignKeyColumns(tableCollection.Table);
 
             foreach (var row in rows)
             {
                 var pkeyForTargetTbl = new PrimaryKeySet();
                 foreach (var primaryCol in primaryCols)
-                {
                     pkeyForTargetTbl.PrimaryKeys.Add(new ColumnValueSet(primaryCol, row.GetValueFor(primaryCol)));
-                    nodes.Add(new TableNode(tableCollection.Table, tableCollection.Table, pkeyForTargetTbl));
-                }
+
+                nodes.Add(new TableNode(tableCollection.Table, tableCollection.Table, pkeyForTargetTbl));
             }
 
             return nodes;

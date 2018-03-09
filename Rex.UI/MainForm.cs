@@ -81,7 +81,7 @@ namespace Rex.UI
 
         private MainFormController controller;
 
-        private void LoadSettings ()
+        private void LoadSettings()
         {
             singularizeToolStripMenuItem.Checked = Properties.Settings.Default.Singularize;
         }
@@ -144,7 +144,9 @@ namespace Rex.UI
 
         private void addRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.AddRecord();
+            var pKeys = controller.AddRecord();
+
+            treeView1.Nodes.Add(new TableNode(pKeys.TableName, pKeys.TableName, pKeys.PrimaryKeys));
         }
     }
 }

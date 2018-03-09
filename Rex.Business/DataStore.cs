@@ -32,9 +32,9 @@ namespace Rex.Business
             return true;
         }
 
-        public void AddRecord()
+        public TablePrimaryKeys GetNewRecordKeys()
         {
-            new Controller.NewRecordFormController().GetRecordPrimaryKeySet();
+            return new Controller.NewRecordFormController(_schema).GetRecordPrimaryKeySet();
         }
 
         public IList<TableColumnPair> GetTablesReferencedBy(string tableName)
@@ -60,6 +60,16 @@ namespace Rex.Business
         public IEnumerable<string> GetPrimaryColumns(string table)
         {
             return _schema.GetPrimaryColumns(table);
+        }
+
+        public IEnumerable<string> GetAllTables()
+        {
+            return _schema.GetAllTables();
+        }
+
+        public IEnumerable<string> GetForeignKeyColumns(string table)
+        {
+            return _schema.GetForeignKeyColumns(table);
         }
     }
 }

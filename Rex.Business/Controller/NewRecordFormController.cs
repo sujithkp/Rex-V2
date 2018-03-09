@@ -1,9 +1,7 @@
-﻿using Rex.Business.UI;
-using System;
+﻿using Rex.Business.Store;
+using Rex.Business.UI;
+using Rex.Common.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rex.Business.Controller
 {
@@ -11,17 +9,24 @@ namespace Rex.Business.Controller
     {
         private AddRecordForm View;
 
-        public NewRecordFormController()
+        private InformationSchema _schema;
+
+        public NewRecordFormController(InformationSchema schema)
         {
             this.View = new AddRecordForm(this);
+            _schema = schema;
         }
 
-        public void GetRecordPrimaryKeySet()
+        public TablePrimaryKeys GetRecordPrimaryKeySet()
         {
-            this.View.ShowDialog();
-
+            this.View.GetPrimaryKeys(_schema.GetAllTables());
+            return this.View.Result;
         }
 
+        public IEnumerable<string> GetPrimaryKeys(string table)
+        {
+            return _schema.GetPrimaryColumns(table);
+        }
 
     }
 }
