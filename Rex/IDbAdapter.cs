@@ -1,12 +1,11 @@
 ﻿using Rex.Common.Data;
-using System;
 using System.Collections.Generic;
 
 namespace Rex.Common
 {
     public interface IDbAdapter
     {
-        IEnumerable<String> GetAllTables();
+        IEnumerable<string> GetAllTables();
 
         IEnumerable<ReferentialConstraint> GetReferentialConstraints();
 

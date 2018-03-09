@@ -20,7 +20,7 @@ namespace Rex.SqlServer.UI
 
         public string DatabaseName { get; private set; }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnOk_click(object sender, EventArgs e)
         {
             this.ConnectionStringName = txtConnectionStrinName.Text;
             this.ServerName = txtServerName.Text;
@@ -28,6 +28,12 @@ namespace Rex.SqlServer.UI
             this.Password = txtPassword.Text;
             this.DatabaseName = txtDatabase.Text;
 
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }

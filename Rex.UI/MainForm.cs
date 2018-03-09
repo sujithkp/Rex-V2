@@ -103,15 +103,6 @@ namespace Rex.UI
             e.Node.Nodes.AddRange(dependants.ToArray());
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            //var keySet = new PrimaryKeySet();
-            //keySet.PrimaryKeys.Add(new ColumnValueSet("EmployeeID", "9"));
-
-
-            //treeView1.Nodes.Add(new TableNode("Employees", "Employees", keySet));
-        }
-
         private void singularizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             singularizeToolStripMenuItem.Checked = !singularizeToolStripMenuItem.Checked;
@@ -144,7 +135,20 @@ namespace Rex.UI
 
         private void addRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (conectToolStripMenuItem.Enabled)
+            {
+                sqlServerToolStripMenuItem_Click(sender, e);
+
+                if (!conectToolStripMenuItem.Enabled)
+                    addRecordToolStripMenuItem_Click(sender, e);
+
+                return;
+            }
+
             var pKeys = controller.AddRecord();
+
+            if (pKeys == null)
+                return;
 
             treeView1.Nodes.Add(new TableNode(pKeys.TableName, pKeys.TableName, pKeys.PrimaryKeys));
         }
