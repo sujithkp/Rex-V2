@@ -1,4 +1,5 @@
 ﻿using Rex.Business;
+using Rex.Common.Connection;
 using Rex.Common.Data;
 using Rex.UI.Controls;
 using Rex.UI.Lib;
@@ -10,17 +11,18 @@ namespace Rex.UI.Controllers
     public class MainFormController
     {
         private DataStore store;
-
         private bool IsConnected = false;
+        private ConnectionProperties _connectionProperties;
 
         public MainFormController()
         {
             store = new DataStore();
         }
 
-        public bool Connect()
+        public ConnectionProperties Connect()
         {
-            return IsConnected = store.Connect();
+            IsConnected = (_connectionProperties = store.Connect()) != null;
+            return _connectionProperties;
         }
 
         public TablePrimaryKeys AddRecord()
@@ -30,9 +32,6 @@ namespace Rex.UI.Controllers
 
         public IList<RexNode> GetDependants(TableNode tableNode)
         {
-            if (!IsConnected && !Connect())
-                return null;
-
             var nodes = new List<RexNode>();
 
             var dataRow = store.GetRow(tableNode.Table, tableNode.keys);
@@ -58,9 +57,6 @@ namespace Rex.UI.Controllers
 
         public IList<RexNode> GetDependants(TableCollectionNode tableCollection)
         {
-            if (!IsConnected && !Connect())
-                return null;
-
             var nodes = new List<RexNode>();
 
             var rows = store.GetRows(tableCollection.Table, tableCollection.keys);
@@ -86,17 +82,11 @@ namespace Rex.UI.Controllers
 
         public IEnumerable<Row> GetRows(TableCollectionNode tableCollection)
         {
-            if (!IsConnected && !Connect())
-                return null;
-
             return store.GetRows(tableCollection.Table, tableCollection.keys);
         }
 
         public Row GetRows(TableNode table)
         {
-            if (!IsConnected && !Connect())
-                return null;
-
             return store.GetRow(table.Table, table.keys);
         }
     }

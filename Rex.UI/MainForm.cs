@@ -21,6 +21,8 @@ namespace Rex.UI
             this.Load += MainForm_Load1;
         }
 
+        private bool IsConnected { get; set; }
+
         private void MainForm_Load1(object sender, EventArgs e)
         {
             this.controller = new MainFormController();
@@ -55,6 +57,7 @@ namespace Rex.UI
                     dataGridView1.Rows.Add(new string[] { col.Name, col.Value });
 
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                dataGridView1.AllowUserToAddRows = false;
             }
         }
 
@@ -127,7 +130,13 @@ namespace Rex.UI
 
         private void sqlServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            conectToolStripMenuItem.Enabled = !controller.Connect();
+            var connectionDetail = controller.Connect();
+            conectToolStripMenuItem.Enabled = this.IsConnected = (connectionDetail == null);
+
+            if (connectionDetail == null)
+                return;
+
+            this.Text = "Rex - " + connectionDetail.ConnectionDetail;
 
             if (!conectToolStripMenuItem.Enabled)
                 statusStrip1.Items[0].Text = "Connected";
@@ -135,11 +144,11 @@ namespace Rex.UI
 
         private void addRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (conectToolStripMenuItem.Enabled)
+            if (!this.IsConnected)
             {
                 sqlServerToolStripMenuItem_Click(sender, e);
 
-                if (!conectToolStripMenuItem.Enabled)
+                if (!this.IsConnected)
                     addRecordToolStripMenuItem_Click(sender, e);
 
                 return;

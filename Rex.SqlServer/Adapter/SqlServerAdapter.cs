@@ -1,4 +1,5 @@
 ﻿using Rex.Common;
+using Rex.Common.Connection;
 using Rex.Common.Data;
 using Rex.SqlServer.Business;
 using Rex.SqlServer.Controller;
@@ -17,24 +18,20 @@ namespace Rex.SqlServer.Adapter
 
         private RecordParser _recordParser;
 
-        public SqlServerAdapter()
-        {
-
-        }
-
-        public bool Connect ()
+        public ConnectionProperties Connect()
         {
             ConnectionStringFormController controller = new ConnectionStringFormController();
             var connectionString = controller.GetConnectionString();
 
             if (connectionString == null)
-                return false;
+                return null;
 
             _queryExecuter = new QueryExecuter(connectionString);
             _refparser = new ReferentialConstraintParser();
             _recordParser = new RecordParser();
 
-            return true;
+            var connectionStringBuilder = new System.Data.SqlClient.SqlConnectionStringBuilder(connectionString);
+            return new ConnectionProperties(connectionStringBuilder.DataSource + " " + connectionStringBuilder.InitialCatalog);
         }
 
         public IEnumerable<string> GetAllTables()

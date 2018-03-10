@@ -1,4 +1,5 @@
-﻿using Rex.Common.Data;
+﻿using Rex.Common.Connection;
+using Rex.Common.Data;
 using System.Collections.Generic;
 
 namespace Rex.Common
@@ -13,6 +14,6 @@ namespace Rex.Common
 
         IEnumerable<Row> GetRows(string tableName, KeySet foreignKey);
 
-        bool Connect();
+        ConnectionProperties Connect();
     }
 }

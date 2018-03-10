@@ -1,6 +1,6 @@
 ﻿using Rex.Business.Store;
-using Rex.Business.UI;
 using Rex.Common;
+using Rex.Common.Connection;
 using Rex.Common.Data;
 using System.Collections.Generic;
 
@@ -21,15 +21,16 @@ namespace Rex.Business
             _schema.Initialize(_dataAdapter.GetReferentialConstraints());
         }
 
-        public bool Connect()
+        public ConnectionProperties Connect()
         {
             _dataAdapter = new SqlServer.Adapter.SqlServerAdapter();
+            var connectionProperties = _dataAdapter.Connect();
 
-            if (!_dataAdapter.Connect())
-                return false;
+            if (connectionProperties == null)
+                return null;
 
             Initialize();
-            return true;
+            return connectionProperties;
         }
 
         public TablePrimaryKeys GetNewRecordKeys()
