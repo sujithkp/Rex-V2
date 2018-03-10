@@ -1,4 +1,5 @@
-﻿using Rex.Common.Data;
+﻿using Rex.Common.Connection;
+using Rex.Common.Data;
 using Rex.UI.Controllers;
 using Rex.UI.Controls;
 using Rex.UI.Lib;
@@ -130,7 +131,10 @@ namespace Rex.UI
 
         private void sqlServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var connectionDetail = controller.Connect();
+            ConnectionProperties connectionDetail = null;
+            var connectTask = Task<ConnectionProperties>.Factory.StartNew(() => controller.Connect());
+            connectionDetail = connectTask.Result;
+
             conectToolStripMenuItem.Enabled = this.IsConnected = (connectionDetail == null);
 
             if (connectionDetail == null)

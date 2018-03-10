@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Rex.SqlServer.UI
@@ -10,31 +11,57 @@ namespace Rex.SqlServer.UI
             InitializeComponent();
         }
 
+        public SqlConnectionStringBuilder ConnectionString { get; private set; }
+
         public string ConnectionStringName { get; private set; }
 
-        public string ServerName { get; private set; }
-
-        public string Username { get; private set; }
-
-        public string Password { get; private set; }
-
-        public string DatabaseName { get; private set; }
+        public bool Verified { get; private set; }
 
         private void btnOk_click(object sender, EventArgs e)
         {
-            this.ConnectionStringName = txtConnectionStrinName.Text;
-            this.ServerName = txtServerName.Text;
-            this.Username = txtLogin.Text;
-            this.Password = txtPassword.Text;
-            this.DatabaseName = txtDatabase.Text;
+            var ConnectionStringName = txtConnectionStrinName.Text;
+            var ServerName = txtServerName.Text;
+            var Username = txtLogin.Text;
+            var Password = txtPassword.Text;
+            var DatabaseName = txtDatabase.Text;
 
-            this.Close();
+            var connectionStringBuilder = new ConnectionStringBuilder();
+            var connectionString = connectionStringBuilder.Build(ServerName, DatabaseName, Username, Password);
+
+            if (Verify(connectionString))
+            {
+                this.ConnectionString = new SqlConnectionStringBuilder(connectionString);
+                this.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+
+        private bool Verify(string connectionString)
+        {
+            var sqlClient = new System.Data.SqlClient.SqlConnection(connectionString);
+
+            try
+            {
+                sqlClient.Open();
+
+                if (sqlClient.State != System.Data.ConnectionState.Open)
+                    throw new Exception("Could not connect.");
+
+                sqlClient.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return false;
         }
     }
 }

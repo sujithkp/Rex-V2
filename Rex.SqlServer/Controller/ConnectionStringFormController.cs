@@ -10,18 +10,19 @@ namespace Rex.SqlServer.Controller
             var form = new ConnectionStringForm();
             var dialogResult = form.ShowDialog();
 
+            var connectionString = form.ConnectionString;
+            if (connectionString == null)
+                return null;
+
             var connectionStringName = form.ConnectionStringName;
-            var serverName = form.ServerName;
-            var username = form.Username;
-            var password = form.Password;
-            var database = form.DatabaseName;
 
             if (dialogResult != System.Windows.Forms.DialogResult.OK)
                 return null;
 
-            new ConnectionStringPersistor().Persist(connectionStringName, serverName, username, password);
+            new ConnectionStringPersistor().Persist(connectionStringName, connectionString.DataSource,
+                connectionString.UserID, connectionString.Password);
 
-            return new ConnectionStringBuilder().Build(serverName, database, username, password);
+            return connectionString.ConnectionString;
         }
     }
 }
