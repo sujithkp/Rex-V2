@@ -52,6 +52,8 @@
     <Compile Include="DataStore.cs" />
     <Compile Include="Store\InformationSchema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Store\TableGraph.cs" />
+    <Compile Include="TableRelations.cs" />
     <Compile Include="UI\AddRecordForm.cs">
       <SubType>Form</SubType>
     </Compile>
