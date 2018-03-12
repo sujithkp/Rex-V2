@@ -135,7 +135,7 @@ namespace Rex.UI
             var connectTask = Task<ConnectionProperties>.Factory.StartNew(() => controller.Connect());
             connectionDetail = connectTask.Result;
 
-            conectToolStripMenuItem.Enabled = this.IsConnected = (connectionDetail == null);
+            conectToolStripMenuItem.Enabled = !(this.IsConnected = (connectionDetail != null));
 
             if (connectionDetail == null)
                 return;
@@ -152,7 +152,7 @@ namespace Rex.UI
             {
                 sqlServerToolStripMenuItem_Click(sender, e);
 
-                if (!this.IsConnected)
+                if (this.IsConnected)
                     addRecordToolStripMenuItem_Click(sender, e);
 
                 return;
