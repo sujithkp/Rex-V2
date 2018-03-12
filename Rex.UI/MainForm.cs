@@ -67,6 +67,9 @@ namespace Rex.UI
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
 
+            if (rows == null || rows.Count() == 0)
+                return;
+
             foreach (var col in rows.First().Columns)
                 dataGridView1.Columns.Add(col.Name, col.Name);
 
@@ -104,7 +107,8 @@ namespace Rex.UI
             if (e.Node is TableCollectionNode)
                 dependants = controller.GetDependants(e.Node as TableCollectionNode);
 
-            e.Node.Nodes.AddRange(dependants.ToArray());
+            if (dependants != null)
+                e.Node.Nodes.AddRange(dependants.ToArray());
         }
 
         private void singularizeToolStripMenuItem_Click(object sender, EventArgs e)
