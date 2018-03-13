@@ -1,24 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Rex.Business.Store
 {
     public class TableGraph
     {
         private TableRelations[,] _tableGraph;
-        private bool[] visitorGraph;
+        private int[] visitorGraph;
 
         private Dictionary<string, int> _tableIndex;
 
         private IList<string> _tables;
 
+        private StreamWriter writer = new StreamWriter("c:\\logs\\rex.log");
+
+        private int visitorCount = 0;
+
         public void Initialize(InformationSchema informationSchema)
         {
-            _tables = informationSchema.GetAllTables();
+            _tables = informationSchema.GetAllTables().Where(x => !x.Contains("ParMap")).ToList();
             PrepareTableIndex();
 
             _tableGraph = new TableRelations[_tables.Count, _tables.Count];
-            visitorGraph = new bool[_tables.Count];
+            visitorGraph = new int[_tables.Count];
 
             foreach (var table in _tables)
             {
@@ -27,6 +34,9 @@ namespace Rex.Business.Store
 
                 foreach (var targetTable in referencedTables)
                 {
+                    if (!_tableIndex.Keys.Contains(targetTable))
+                        continue;
+
                     var targetTableIndex = _tableIndex[targetTable];
                     _tableGraph[stableIndex, targetTableIndex] = TableRelations.OneToOne;
                 }
@@ -35,6 +45,9 @@ namespace Rex.Business.Store
 
                 foreach (var targetTable in referencingTables)
                 {
+                    if (!_tableIndex.Keys.Contains(targetTable))
+                        continue;
+
                     var targetTableIndex = _tableIndex[targetTable];
 
                     if (_tableGraph[stableIndex, targetTableIndex] != TableRelations.OneToOne)
@@ -42,17 +55,57 @@ namespace Rex.Business.Store
                 }
             }
 
-            // var path = FindPath("Jobs", "Sensors");
+            var pathList = new List<List<string>>();
+            var baseTable = "LoanRequest";
+
+            var selectedTables = _tables;
+
+            foreach (var table in selectedTables)
+            {
+                if (table == baseTable)
+                    continue;
+
+                writer.WriteLine("looking for relation between " + baseTable + " and " + table);
+                writer.Flush();
+
+                var path = FindPath(string.Empty, baseTable, table);
+                pathList.Add(path);
+            }
+
             // var path = FindPath("Jobs", "Components");
         }
 
-        public List<string> FindPath(string start, string end)
+
+        private string prepareVisitorGraph()
+        {
+            StringBuilder tables = new StringBuilder();
+            try
+            {
+                for (int i = 1; i <= visitorCount; i++)
+                {
+                    var tableIndex = Array.IndexOf(visitorGraph, i);
+                    tables.Append(" > " + _tables[tableIndex]);
+                }
+
+                writer.WriteLine(tables.ToString());
+                writer.Flush();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return tables.ToString();
+        }
+
+        public List<string> FindPath(string pathFollowed, string start, string end)
         {
             if (start == end)
                 return null;
 
             List<string> path = new List<string>();
-            visitorGraph[_tableIndex[start]] = true;
+            visitorGraph[_tableIndex[start]] = ++visitorCount;
+            prepareVisitorGraph();
 
             var startTableIndex = _tableIndex[start];
 
@@ -66,7 +119,10 @@ namespace Rex.Business.Store
                 {
                     path2.Add(start);
                     path2.Add(end);
-                    visitorGraph[_tableIndex[start]] = false;
+                    visitorGraph[_tableIndex[start]] = 0;
+                    --visitorCount;
+                    prepareVisitorGraph();
+
 
                     return path2;
                 }
@@ -74,7 +130,7 @@ namespace Rex.Business.Store
                 if (_tableGraph[startTableIndex, i] == 0)
                     continue;
 
-                if (visitorGraph[i] == true)
+                if (visitorGraph[i] > 0)
                     continue;
 
                 var path3 = FindPath(_tables[i], end);
@@ -91,9 +147,17 @@ namespace Rex.Business.Store
                 if (path.Count > 0 && path2.Count > 0)
                     if (path2.Count < path.Count)
                         path = path2;
+
+                if (start == "LoanRequest")
+                {
+
+                }
             }
 
-            visitorGraph[_tableIndex[start]] = false;
+            visitorGraph[_tableIndex[start]] = 0;
+            --visitorCount;
+            prepareVisitorGraph();
+
             return path;
         }
 

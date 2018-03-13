@@ -33,7 +33,7 @@ namespace Rex.Business
                 return null;
 
             Initialize();
-            //_tableGraph.Initialize(_schema);
+            _tableGraph.Initialize(_schema);
 
             return connectionProperties;
         }

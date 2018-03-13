@@ -12,6 +12,10 @@ namespace Rex.SqlServer
 
         public string Build(string server, string initialCatalog, string username, string password)
         {
+
+            return "Data Source=.\\sqlexpress;Initial Catalog=Flexilineweb;Integrated Security=SSPI;";
+
+
             return string.Format(connectionStringFormat, server, initialCatalog, username, password);
         }
     }
