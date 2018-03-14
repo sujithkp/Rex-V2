@@ -11,12 +11,9 @@ namespace Rex.Business
         private IDbAdapter _dataAdapter;
         private InformationSchema _schema;
 
-        private TableGraph _tableGraph;
-
         public DataStore()
         {
             _schema = new InformationSchema();
-            _tableGraph = new TableGraph();
         }
 
         void Initialize()
@@ -33,8 +30,6 @@ namespace Rex.Business
                 return null;
 
             Initialize();
-            _tableGraph.Initialize(_schema);
-
             return connectionProperties;
         }
 
