@@ -8,46 +8,68 @@ namespace Rex.Business.Store
 {
     public class TableGraph
     {
-        private TableRelations[,] _tableGraph;
-        private int[] visitorGraph;
-        private Dictionary<string, int> _tableIndex;
-        private IList<string> _tables;
+        private Dictionary<string, Node> NodeIndex = new Dictionary<string, Node>();
 
         public void Initialize(InformationSchema informationSchema)
         {
-            _tables = informationSchema.GetAllTables();
+            var tables = informationSchema.GetAllTables();
 
-            _tableGraph = new TableRelations[_tables.Count, _tables.Count];
-            visitorGraph = new int[_tables.Count];
-
-            foreach (var table in _tables)
+            foreach (var table in tables)
             {
                 var referencedTables = informationSchema.GetReferencedTables(table).Select(x => x.Target.Table);
-                var stableIndex = _tableIndex[table];
+                var thisNode = new Node(table);
+                NodeIndex.Add(table, thisNode);
 
                 foreach (var targetTable in referencedTables)
                 {
-                    if (!_tableIndex.Keys.Contains(targetTable))
+                    if (!thisNode.ContainsChild(targetTable))
                         continue;
 
-                    var targetTableIndex = _tableIndex[targetTable];
-                    _tableGraph[stableIndex, targetTableIndex] = TableRelations.OneToOne;
+                    if (!this.NodeIndex.Keys.Contains(targetTable))
+                        this.NodeIndex.Add(targetTable, new Node(targetTable));
+
+                    thisNode.Nodes.Add(NodeIndex[targetTable]);
                 }
 
                 var referencingTables = informationSchema.GetReferencingTables(table).Select(x => x.Source.Table);
 
                 foreach (var targetTable in referencingTables)
                 {
-                    if (!_tableIndex.Keys.Contains(targetTable))
+                    if (!thisNode.ContainsChild(targetTable))
                         continue;
 
-                    var targetTableIndex = _tableIndex[targetTable];
+                    if (!this.NodeIndex.Keys.Contains(targetTable))
+                        this.NodeIndex.Add(targetTable, new Node(targetTable));
 
-                    if (_tableGraph[stableIndex, targetTableIndex] != TableRelations.OneToOne)
-                        _tableGraph[stableIndex, targetTableIndex] = TableRelations.OneToMany;
+                    thisNode.Nodes.Add(NodeIndex[targetTable]);
                 }
             }
         }
     }
+
+    internal class Node
+    {
+        public string Name { get; private set; }
+
+        public bool Visited { get; set; }
+
+        public IList<Node> Nodes { get; set; }
+
+        public Node(string name)
+        {
+            this.Name = name;
+            this.Nodes = new List<Node>();
+        }
+
+        public bool ContainsChild(string childName)
+        {
+            return this.Nodes.Any(x => x.Name == childName);
+        }
+
+    }
+
+
+
+
 }
 
