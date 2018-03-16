@@ -171,7 +171,7 @@
             this.txtDatabase.Name = "txtDatabase";
             this.txtDatabase.Size = new System.Drawing.Size(232, 24);
             this.txtDatabase.TabIndex = 5;
-            this.txtDatabase.Text = "Flexilineweb";
+            this.txtDatabase.Text = "NWind";
             // 
             // label7
             // 

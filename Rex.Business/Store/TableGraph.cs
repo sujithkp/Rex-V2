@@ -12,9 +12,19 @@ namespace Rex.Business.Store
 
         private int MaxDepth = 20;
 
+        private int CalculateMaxDepth()
+        {
+            return this.MaxDepth = NodeIndex.
+                Select(x => new
+                {
+                    Name = x.Key,
+                    ChildrenCount = x.Value.Nodes.Count
+                }).Max(x => x.ChildrenCount);
+        }
+
         public void Initialize(InformationSchema informationSchema)
         {
-            var tables = informationSchema.GetAllTables();//.Where(x => !x.Contains("Par")).ToList(); ;
+            var tables = informationSchema.GetAllTables();
 
             foreach (var table in tables)
             {
@@ -49,6 +59,8 @@ namespace Rex.Business.Store
                     thisNode.Nodes.Add(NodeIndex[targetTable]);
                 }
             }
+
+            CalculateMaxDepth();
         }
 
         public IList<string> FindPath(string startTable, string endTable)
@@ -121,9 +133,5 @@ namespace Rex.Business.Store
         }
 
     }
-
-
-
-
 }
 

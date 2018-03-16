@@ -33,7 +33,7 @@ namespace Rex.Business
             if (connectionProperties == null)
                 return null;
 
-            Initialize();        
+            Initialize();
 
             return connectionProperties;
         }
@@ -76,6 +76,11 @@ namespace Rex.Business
         public IEnumerable<string> GetForeignKeyColumns(string table)
         {
             return _schema.GetForeignKeyColumns(table);
+        }
+
+        public IEnumerable<string> FindPath(string source, string target)
+        {
+            return _tableGraph.FindPath(source, target);
         }
     }
 }
