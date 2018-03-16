@@ -10,6 +10,7 @@ namespace Rex.Business
     {
         private IDbAdapter _dataAdapter;
         private InformationSchema _schema;
+        private TableGraph _tableGraph;
 
         public DataStore()
         {
@@ -18,7 +19,11 @@ namespace Rex.Business
 
         void Initialize()
         {
-            _schema.Initialize(_dataAdapter.GetReferentialConstraints());
+            var referentialConstraints = _dataAdapter.GetReferentialConstraints();
+            _schema.Initialize(referentialConstraints);
+
+            (_tableGraph = new TableGraph()).Initialize(_schema);
+            _tableGraph.TestGetPath();
         }
 
         public ConnectionProperties Connect()
@@ -29,7 +34,8 @@ namespace Rex.Business
             if (connectionProperties == null)
                 return null;
 
-            Initialize();
+            Initialize();        
+
             return connectionProperties;
         }
 

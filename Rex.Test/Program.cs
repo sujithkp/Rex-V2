@@ -9,7 +9,33 @@ namespace Rex.Test
 {
     class Program
     {
+
         static void Main(string[] args)
+        {
+            var store = new DataStore();
+            store.Connect();
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        static void Tes2(string[] args)
         {
             var tableName = "Sensors";
 
