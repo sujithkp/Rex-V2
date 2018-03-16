@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace Rex.Business.Store
 {
     public class TableGraph
     {
+        private int _currentDepth;
+
         private Dictionary<string, Node> NodeIndex = new Dictionary<string, Node>();
 
         private int MaxDepth = 20;
@@ -52,51 +51,6 @@ namespace Rex.Business.Store
             }
         }
 
-        public void TestGetPath()
-        {
-
-            //NodeIndex.Select(x => new { Name = x.Key, Count = x.Value.Nodes.Count })
-            //    .OrderBy(x => x.Count).ToList()
-            //    .ForEach(x => Console.WriteLine(x.Name + " : " + x.Count));
-
-
-            //Console.ReadKey();
-
-            //return;
-
-            var startTable = "LoanRequest";
-            var endTable = "Payment";
-
-            ShortestPathLength = null;
-            startTableName = startTable;
-
-            var startTime = DateTime.Now;
-            var path = FindPath(startTable, endTable);
-            var timeTaken = (DateTime.Now.Subtract(startTime)); ;
-
-
-            var numberofPathsFound = pathsFound.Count;
-
-            System.Diagnostics.Debug.Print(timeTaken.TotalSeconds.ToString());
-
-        }
-
-        private string startTableName = string.Empty;
-
-        private List<IList<string>> pathsFound = new List<IList<string>>();
-
-        private int? ShortestPathLength;
-
-        private void ShowNodeEntered(string name)
-        {
-            Console.SetCursorPosition(5, 10);
-            Console.Write(name);
-            Console.Write("                                                                                           ");
-            Thread.Sleep(500);
-        }
-
-        private int Depth;
-
         public IList<string> FindPath(string startTable, string endTable)
         {
             if (startTable.Equals(endTable))
@@ -108,11 +62,11 @@ namespace Rex.Business.Store
             var endNode = NodeIndex[endTable];
 
             startNode.Visited = true;
-            Depth++;
+            _currentDepth++;
 
-            if (Depth > MaxDepth)
+            if (_currentDepth > MaxDepth)
             {
-                Depth--;
+                _currentDepth--;
                 return shortestPath;
             }
 
@@ -141,7 +95,8 @@ namespace Rex.Business.Store
             }
 
             startNode.Visited = false;
-            Depth--;
+            _currentDepth--;
+
             return shortestPath;
         }
     }

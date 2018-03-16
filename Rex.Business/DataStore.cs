@@ -23,7 +23,6 @@ namespace Rex.Business
             _schema.Initialize(referentialConstraints);
 
             (_tableGraph = new TableGraph()).Initialize(_schema);
-            _tableGraph.TestGetPath();
         }
 
         public ConnectionProperties Connect()
