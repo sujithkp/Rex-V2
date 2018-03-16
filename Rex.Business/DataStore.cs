@@ -82,5 +82,10 @@ namespace Rex.Business
         {
             return _tableGraph.FindPath(source, target);
         }
+
+        public IEnumerable<IEnumerable<string>> FindPaths (string source, string target)
+        {
+            return _tableGraph.FindPaths(source, target);
+        }
     }
 }

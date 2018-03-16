@@ -15,12 +15,13 @@ namespace Rex.Test
             var store = new DataStore();
             store.Connect();
 
-            var paths = store.FindPath("Employees", "Suppliers");
+            var paths = store.FindPaths("LoanRequest", "CreditProduct");
 
 
             Console.ReadKey();
 
         }
+
 
         static void Tes2(string[] args)
         {

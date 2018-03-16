@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Rex.Business.Store
@@ -10,10 +11,15 @@ namespace Rex.Business.Store
 
         private Dictionary<string, Node> NodeIndex = new Dictionary<string, Node>();
 
-        private int MaxDepth = 20;
+        private IList<IList<string>> paths = new List<IList<string>>();
+
+        private int MaxDepth = 10;
+
+        private string _startTable = string.Empty;
 
         private int CalculateMaxDepth()
         {
+            return 5;
             return this.MaxDepth = NodeIndex.
                 Select(x => new
                 {
@@ -65,6 +71,9 @@ namespace Rex.Business.Store
 
         public IList<string> FindPath(string startTable, string endTable)
         {
+            if (_startTable == string.Empty)
+                _startTable = startTable;
+
             if (startTable.Equals(endTable))
                 return new String[] { endTable }.ToList();
 
@@ -73,12 +82,14 @@ namespace Rex.Business.Store
             var startNode = NodeIndex[startTable];
             var endNode = NodeIndex[endTable];
 
+
             startNode.Visited = true;
             _currentDepth++;
 
             if (_currentDepth > MaxDepth)
             {
                 _currentDepth--;
+                startNode.Visited = false;
                 return shortestPath;
             }
 
@@ -90,7 +101,15 @@ namespace Rex.Business.Store
                 if (node.Visited == true)
                     continue;
 
+                if (startTable == _startTable)
+                {
+
+                }
+
+
                 var path = FindPath(node.Name, endTable);
+
+
 
                 if (path != null)
                 {
@@ -103,6 +122,9 @@ namespace Rex.Business.Store
 
                     if (p1.Count < shortestPath.Count)
                         shortestPath = p1;
+
+                    if (startTable == _startTable)
+                        paths.Add(p1);
                 }
             }
 
@@ -111,13 +133,40 @@ namespace Rex.Business.Store
 
             return shortestPath;
         }
+
+        public IList<IList<string>> FindPaths(string source, string target)
+        {
+            paths = new List<IList<string>>();
+
+            FindPath(source, target);
+
+            return paths;
+        }
+
     }
 
     internal class Node
     {
+        private bool visited = false;
+
         public string Name { get; private set; }
 
-        public bool Visited { get; set; }
+        public bool Visited
+        {
+            set
+            {
+                visited = value;
+
+                if (value)
+                    PathTracer.Add(this.Name);
+                else
+                    PathTracer.Remove(this.Name);
+            }
+            get
+            {
+                return visited;
+            }
+        }
 
         public IList<Node> Nodes { get; set; }
 
@@ -131,7 +180,32 @@ namespace Rex.Business.Store
         {
             return this.Nodes.Any(x => x.Name == childName);
         }
-
     }
+
+
+    public class PathTracer
+    {
+        private static IList<string> path = new List<string>();
+
+        private static StreamWriter writer = new StreamWriter("C:\\logs\\rex.log");
+
+        public static void Add(string node)
+        {
+            path.Add(node);
+
+            writer.WriteLine(string.Join(" > ", path));
+            writer.Flush();
+        }
+
+        public static void Remove(string node)
+        {
+            path.Remove(node);
+
+            writer.WriteLine(string.Join(" > ", path));
+            writer.Flush();
+        }
+    }
+
+
 }
 
