@@ -1,6 +1,6 @@
 ﻿namespace Rex.Business.UI
 {
-    partial class AddRecordForm
+    partial class AddRecordWindow
     {
         /// <summary>
         /// Required designer variable.

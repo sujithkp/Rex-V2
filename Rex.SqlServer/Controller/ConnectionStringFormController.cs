@@ -7,7 +7,7 @@ namespace Rex.SqlServer.Controller
     {
         public string GetConnectionString()
         {
-            var form = new ConnectionStringForm();
+            var form = new ConnectionParameterWindow();
             var dialogResult = form.ShowDialog();
 
             var connectionString = form.ConnectionString;

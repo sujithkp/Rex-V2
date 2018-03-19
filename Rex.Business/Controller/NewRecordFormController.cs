@@ -7,13 +7,13 @@ namespace Rex.Business.Controller
 {
     public class NewRecordFormController
     {
-        private AddRecordForm View;
+        private AddRecordWindow View;
 
         private InformationSchema _schema;
 
         public NewRecordFormController(InformationSchema schema)
         {
-            this.View = new AddRecordForm(this);
+            this.View = new AddRecordWindow(this);
             _schema = schema;
         }
 

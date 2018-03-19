@@ -58,11 +58,11 @@
     <Compile Include="Adapter\SqlServerAdapter.cs" />
     <Compile Include="Store\DataQueries.cs" />
     <Compile Include="Store\SchemaQueries.cs" />
-    <Compile Include="UI\ConnectionStringForm.cs">
+    <Compile Include="UI\ConnectionParameterWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ConnectionStringForm.Designer.cs">
-      <DependentUpon>ConnectionStringForm.cs</DependentUpon>
+    <Compile Include="UI\ConnectionParameterWindow.Designer.cs">
+      <DependentUpon>ConnectionParameterWindow.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -75,8 +75,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\ConnectionStringForm.resx">
-      <DependentUpon>ConnectionStringForm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\ConnectionParameterWindow.resx">
+      <DependentUpon>ConnectionParameterWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

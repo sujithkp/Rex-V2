@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace Rex.SqlServer.UI
 {
-    public partial class ConnectionStringForm : Form
+    public partial class ConnectionParameterWindow : Form
     {
-        public ConnectionStringForm()
+        public ConnectionParameterWindow()
         {
             InitializeComponent();
         }

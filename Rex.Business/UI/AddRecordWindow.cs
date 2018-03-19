@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Rex.Business.UI
 {
-    public partial class AddRecordForm : Form
+    public partial class AddRecordWindow : Form
     {
         private NewRecordFormController Controller;
         public PrimaryKeySet PrimaryKeys { get; private set; }
@@ -15,7 +15,7 @@ namespace Rex.Business.UI
 
         public TablePrimaryKeys Result { get; private set; }
 
-        public AddRecordForm(NewRecordFormController controller)
+        public AddRecordWindow(NewRecordFormController controller)
         {
             InitializeComponent();
 

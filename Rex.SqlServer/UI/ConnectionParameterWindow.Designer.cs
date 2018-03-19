@@ -1,6 +1,6 @@
 ﻿namespace Rex.SqlServer.UI
 {
-    partial class ConnectionStringForm
+    partial class ConnectionParameterWindow
     {
         /// <summary>
         /// Required designer variable.
