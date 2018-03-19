@@ -9,17 +9,24 @@ namespace Rex.Test
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             var store = new DataStore();
             store.Connect();
 
-            var paths = store.FindPaths("LoanRequest", "CreditProduct");
+            var startTime = DateTime.Now;
+            var paths = store.FindPaths("LoanRequest", "Par_Gender");
+            var endTime = DateTime.Now;
 
+            var diff = endTime.Subtract(startTime);
+
+            Console.WriteLine("Time taken : " + diff.TotalSeconds + "secs" + " (" + diff.TotalMilliseconds + ")");
+            Console.WriteLine(paths.Count() + " paths found.");
+
+            foreach (var path in paths)
+                Console.WriteLine(string.Join(" > ", path));
 
             Console.ReadKey();
-
         }
 
 

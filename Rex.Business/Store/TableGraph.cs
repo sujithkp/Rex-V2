@@ -13,20 +13,9 @@ namespace Rex.Business.Store
 
         private IList<IList<string>> paths = new List<IList<string>>();
 
-        private int MaxDepth = 10;
+        private int MaxDepth = 15;
 
         private string _startTable = string.Empty;
-
-        private int CalculateMaxDepth()
-        {
-            return 5;
-            return this.MaxDepth = NodeIndex.
-                Select(x => new
-                {
-                    Name = x.Key,
-                    ChildrenCount = x.Value.Nodes.Count
-                }).Max(x => x.ChildrenCount);
-        }
 
         public void Initialize(InformationSchema informationSchema)
         {
@@ -65,8 +54,6 @@ namespace Rex.Business.Store
                     thisNode.Nodes.Add(NodeIndex[targetTable]);
                 }
             }
-
-            CalculateMaxDepth();
         }
 
         public IList<string> FindPath(string startTable, string endTable)
@@ -81,7 +68,6 @@ namespace Rex.Business.Store
 
             var startNode = NodeIndex[startTable];
             var endNode = NodeIndex[endTable];
-
 
             startNode.Visited = true;
             _currentDepth++;
@@ -101,15 +87,7 @@ namespace Rex.Business.Store
                 if (node.Visited == true)
                     continue;
 
-                if (startTable == _startTable)
-                {
-
-                }
-
-
                 var path = FindPath(node.Name, endTable);
-
-
 
                 if (path != null)
                 {
@@ -147,25 +125,12 @@ namespace Rex.Business.Store
 
     internal class Node
     {
-        private bool visited = false;
-
         public string Name { get; private set; }
 
         public bool Visited
         {
-            set
-            {
-                visited = value;
-
-                if (value)
-                    PathTracer.Add(this.Name);
-                else
-                    PathTracer.Remove(this.Name);
-            }
-            get
-            {
-                return visited;
-            }
+            set;
+            get;
         }
 
         public IList<Node> Nodes { get; set; }
