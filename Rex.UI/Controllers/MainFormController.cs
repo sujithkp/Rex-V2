@@ -1,5 +1,6 @@
 ﻿using Rex.Business;
 using Rex.Business.Controller;
+using Rex.Business.UI;
 using Rex.Common.Connection;
 using Rex.Common.Data;
 using Rex.UI.Controls;
@@ -43,14 +44,13 @@ namespace Rex.UI.Controllers
             if (paths.Count() == 0)
                 MessageBox.Show("No Path found.");
             else if (paths.Count() > 1)
-                MessageBox.Show("1 path found." + Environment.NewLine + string.Join(" > ", paths.First().ToArray()));
+            { }
             else
             {
-                var strBuilder = new StringBuilder();
-                paths.ToList().ForEach(x => strBuilder.Append(string.Join(">", x.ToArray()) + Environment.NewLine));
-
-                MessageBox.Show(paths.Count() + " paths found." + Environment.NewLine + strBuilder.ToString());
+                var selectedPath = new PathSelectorController().GetUserSelectedPath(paths);
             }
+
+
         }
 
         public ConnectionProperties Connect()

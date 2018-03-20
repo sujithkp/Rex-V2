@@ -202,6 +202,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(828, 700);
             this.dataGridView1.TabIndex = 4;
             // 
@@ -210,13 +211,13 @@
             this.tableNodeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.linkToolStripMenuItem});
             this.tableNodeContextMenu.Name = "tableNodeContextMenu";
-            this.tableNodeContextMenu.Size = new System.Drawing.Size(153, 48);
+            this.tableNodeContextMenu.Size = new System.Drawing.Size(97, 26);
             this.tableNodeContextMenu.Click += new System.EventHandler(this.tableNodeContextMenu_Click);
             // 
             // linkToolStripMenuItem
             // 
             this.linkToolStripMenuItem.Name = "linkToolStripMenuItem";
-            this.linkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.linkToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.linkToolStripMenuItem.Text = "Link";
             // 
             // MainForm
