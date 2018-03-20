@@ -24,7 +24,8 @@ namespace Rex.Business.UI
 
         public PrimaryKeySet GetPrimaryKeys(IEnumerable<String> tables)
         {
-            tables.ToList().ForEach(x => this.comboBox1.Items.Add(x));
+            this.comboBox1.Items.Clear();
+            this.comboBox1.Items.AddRange(tables.OrderBy(x => x).ToArray());
             var result = this.ShowDialog();
 
             if (result != DialogResult.OK)

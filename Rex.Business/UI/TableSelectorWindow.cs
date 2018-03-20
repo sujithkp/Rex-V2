@@ -41,6 +41,8 @@ namespace Rex.Business.UI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            _selectedTable = null;
+
             this.Close();
         }
     }

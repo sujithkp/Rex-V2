@@ -114,11 +114,21 @@ namespace Rex.Business.Store
 
         public IList<IList<string>> FindPaths(string source, string target)
         {
+            SetAllNonVisited();
+            _startTable = string.Empty;
+
             paths = new List<IList<string>>();
 
             FindPath(source, target);
 
             return paths;
+        }
+
+
+        private void SetAllNonVisited ()
+        {
+            foreach(var nodeKey in NodeIndex.Keys)
+                NodeIndex[nodeKey].Visited = false;
         }
 
     }

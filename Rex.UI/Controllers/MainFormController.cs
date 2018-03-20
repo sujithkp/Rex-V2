@@ -4,8 +4,10 @@ using Rex.Common.Connection;
 using Rex.Common.Data;
 using Rex.UI.Controls;
 using Rex.UI.Lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Rex.UI.Controllers
@@ -31,9 +33,24 @@ namespace Rex.UI.Controllers
 
         private void View_OnLinkClick(object sender, LinkEventArgs args)
         {
-            var selectedTable = tableSelectorController.GetUserSelection();
+            var targetTable = tableSelectorController.GetUserSelection();
 
-            MessageBox.Show(selectedTable);
+            if (string.IsNullOrWhiteSpace(targetTable))
+                return;
+
+            var paths = store.FindPaths(args.SelectedTable, targetTable);
+
+            if (paths.Count() == 0)
+                MessageBox.Show("No Path found.");
+            else if (paths.Count() > 1)
+                MessageBox.Show("1 path found." + Environment.NewLine + string.Join(" > ", paths.First().ToArray()));
+            else
+            {
+                var strBuilder = new StringBuilder();
+                paths.ToList().ForEach(x => strBuilder.Append(string.Join(">", x.ToArray()) + Environment.NewLine));
+
+                MessageBox.Show(paths.Count() + " paths found." + Environment.NewLine + strBuilder.ToString());
+            }
         }
 
         public ConnectionProperties Connect()

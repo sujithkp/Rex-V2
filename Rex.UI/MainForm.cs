@@ -189,7 +189,7 @@ namespace Rex.UI
         private void tableNodeContextMenu_Click(object sender, EventArgs e)
         {
             if (this.OnLinkClick != null)
-                this.OnLinkClick(sender, new LinkEventArgs(treeView1.SelectedNode.Text));
+                this.OnLinkClick(sender, new LinkEventArgs((treeView1.SelectedNode as TableNode).Table));
         }
     }
 }
