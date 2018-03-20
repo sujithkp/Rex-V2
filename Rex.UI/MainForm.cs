@@ -5,6 +5,7 @@ using Rex.UI.Controls;
 using Rex.UI.Lib;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Rex.UI
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMainForm
     {
         public MainForm()
         {
@@ -26,7 +27,7 @@ namespace Rex.UI
 
         private void MainForm_Load1(object sender, EventArgs e)
         {
-            this.controller = new MainFormController();
+            this.controller = new MainFormController(this);
 
             treeView1.BeforeExpand += TreeView1_BeforeExpand;
             treeView1.BeforeSelect += TreeView1_BeforeSelect;
@@ -87,6 +88,8 @@ namespace Rex.UI
         }
 
         private MainFormController controller;
+
+        public event OnLinkClick OnLinkClick;
 
         private void LoadSettings()
         {
@@ -168,6 +171,25 @@ namespace Rex.UI
                 return;
 
             treeView1.Nodes.Add(new TableNode(pKeys.TableName, pKeys.TableName, pKeys.PrimaryKeys));
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+                return;
+
+            treeView1.SelectedNode = e.Node;
+
+            if (!((sender as TreeView).SelectedNode is TableNode))
+                return;
+
+            tableNodeContextMenu.Show(new Point() { X = e.X, Y = e.Y + 50 });
+        }
+
+        private void tableNodeContextMenu_Click(object sender, EventArgs e)
+        {
+            if (this.OnLinkClick != null)
+                this.OnLinkClick(sender, new LinkEventArgs(treeView1.SelectedNode.Text));
         }
     }
 }

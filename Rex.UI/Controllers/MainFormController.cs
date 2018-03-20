@@ -1,10 +1,12 @@
 ﻿using Rex.Business;
+using Rex.Business.Controller;
 using Rex.Common.Connection;
 using Rex.Common.Data;
 using Rex.UI.Controls;
 using Rex.UI.Lib;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Rex.UI.Controllers
 {
@@ -14,9 +16,24 @@ namespace Rex.UI.Controllers
         private bool IsConnected = false;
         private ConnectionProperties _connectionProperties;
 
-        public MainFormController()
+        public IMainForm View;
+
+        private TableSelectorController tableSelectorController;
+
+        public MainFormController(IMainForm mainForm)
         {
             store = new DataStore();
+            this.View = mainForm;
+
+            tableSelectorController = new TableSelectorController(store);
+            this.View.OnLinkClick += View_OnLinkClick;
+        }
+
+        private void View_OnLinkClick(object sender, LinkEventArgs args)
+        {
+            var selectedTable = tableSelectorController.GetUserSelection();
+
+            MessageBox.Show(selectedTable);
         }
 
         public ConnectionProperties Connect()
@@ -89,5 +106,6 @@ namespace Rex.UI.Controllers
         {
             return store.GetRow(table.Table, table.keys);
         }
+
     }
 }

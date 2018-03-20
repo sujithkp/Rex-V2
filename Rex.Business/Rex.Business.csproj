@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\NewRecordFormController.cs" />
+    <Compile Include="Controller\TableSelectorController.cs" />
     <Compile Include="DataStore.cs" />
     <Compile Include="Store\InformationSchema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +60,13 @@
     </Compile>
     <Compile Include="UI\AddRecordWindow.Designer.cs">
       <DependentUpon>AddRecordWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ITableSelector.cs" />
+    <Compile Include="UI\TableSelectorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TableSelectorWindow.Designer.cs">
+      <DependentUpon>TableSelectorWindow.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +82,9 @@
   <ItemGroup>
     <EmbeddedResource Include="UI\AddRecordWindow.resx">
       <DependentUpon>AddRecordWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TableSelectorWindow.resx">
+      <DependentUpon>TableSelectorWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

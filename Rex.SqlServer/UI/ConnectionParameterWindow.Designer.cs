@@ -92,7 +92,7 @@
             this.txtServerName.Name = "txtServerName";
             this.txtServerName.Size = new System.Drawing.Size(233, 22);
             this.txtServerName.TabIndex = 2;
-            this.txtServerName.Text = ".\\sqlexpress";
+            this.txtServerName.Text = "SVRSQL1";
             // 
             // txtLogin
             // 
@@ -171,7 +171,7 @@
             this.txtDatabase.Name = "txtDatabase";
             this.txtDatabase.Size = new System.Drawing.Size(232, 24);
             this.txtDatabase.TabIndex = 5;
-            this.txtDatabase.Text = "Flexilineweb";
+            this.txtDatabase.Text = "NorthWind";
             // 
             // label7
             // 
@@ -191,7 +191,7 @@
             this.label8.Size = new System.Drawing.Size(401, 1);
             this.label8.TabIndex = 14;
             // 
-            // ConnectionStringForm
+            // ConnectionParameterWindow
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,7 +214,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
-            this.Name = "ConnectionStringForm";
+            this.Name = "ConnectionParameterWindow";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connect to Server";

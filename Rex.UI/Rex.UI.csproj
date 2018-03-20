@@ -49,6 +49,9 @@
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controls\TableCollectionNode.cs" />
     <Compile Include="Controls\TableNode.cs" />
+    <Compile Include="IMainForm.cs" />
+    <Compile Include="Lib\LinkEventArgs.cs" />
+    <Compile Include="Lib\LinkEventHandler.cs" />
     <Compile Include="Lib\RexNode.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
