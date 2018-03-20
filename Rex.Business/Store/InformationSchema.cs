@@ -84,5 +84,34 @@ namespace Rex.Business.Store
             return foreignColumns;
 
         }
+
+
+        public IList<TableColumnPair> GetRelation(string sourceTable, string targetTable)
+        {
+            var relations = new List<TableColumnPair>();
+
+            foreach (var refConstraint in _referentialConstraints)
+            {
+                var list1 = refConstraint.Participators.Where(x => x.Source.Table == sourceTable && x.Target.Table == targetTable).ToList();
+               
+                if (list1.Count > 0)
+                {
+                    relations.AddRange(list1);
+                    continue;
+                }
+
+                var list2 = refConstraint.Participators.Where(x => x.Target.Table == sourceTable && x.Source.Table == targetTable).ToList();
+
+                if (list2.Count > 0)
+                {
+                    relations.AddRange(list2);
+                    continue;
+                }
+            }
+
+            return relations;
+        }
+
+
     }
 }

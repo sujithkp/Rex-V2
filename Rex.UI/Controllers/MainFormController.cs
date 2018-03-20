@@ -48,6 +48,8 @@ namespace Rex.UI.Controllers
             else
             {
                 var selectedPath = new PathSelectorController().GetUserSelectedPath(paths);
+
+                var targetTableRows = store.GetRows(targetTable, selectedPath, args.PrimaryKeys);
             }
 
 

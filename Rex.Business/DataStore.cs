@@ -87,5 +87,14 @@ namespace Rex.Business
         {
             return _tableGraph.FindPaths(source, target);
         }
+
+        public IEnumerable<Row> GetRows(string table, string[] path, KeySet primaryKeySet)
+        {
+            _schema.GetRelation(path[path.Length - 1], path[path.Length - 2]);
+
+            return null;
+        }
+
+
     }
 }

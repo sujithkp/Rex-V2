@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 namespace Rex.Common.Data
@@ -23,6 +23,5 @@ namespace Rex.Common.Data
 
             return this;
         }
-
     }
 }
