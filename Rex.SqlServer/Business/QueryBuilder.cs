@@ -8,7 +8,8 @@ namespace Rex.SqlServer.Business
 {
     public class QueryBuilder
     {
-        public string BuildInnerJoinQuery(string[] path, List<TableColumnPair> relations, KeySet primaryKeySet, IEnumerable<string> targetTablePrimaryCols)
+        public string BuildInnerJoinQuery(string[] path, List<TableColumnPair> relations, KeySet primaryKeySet,
+            IEnumerable<string> targetTablePrimaryCols)
         {
             path.Reverse();
 
@@ -19,6 +20,15 @@ namespace Rex.SqlServer.Business
             var firstTableAlias = "_" + firstTable;
 
             var targetCols = targetTablePrimaryCols.Select(x => finalTableAlias + "." + x).ToArray();
+
+            //When the table has no primary columns. we need to get the columns in the table which are refered from other tables.
+            if (targetCols.Count() == 0)
+            {
+                targetCols = relations.Where(x => x.Target.Table == finalTable).Select(x => finalTableAlias + "." + x.Target.Column).ToArray();
+
+                if (targetCols.Count() == 0)
+                    targetCols = relations.Where(x => x.Source.Table == finalTable).Select(x => finalTableAlias + "." + x.Source.Column).ToArray();
+            }
 
             var query = new StringBuilder();
             query.Append("Select DISTINCT" + " " + string.Join(",", targetCols) + " FROM " + firstTable + " " + firstTableAlias);
