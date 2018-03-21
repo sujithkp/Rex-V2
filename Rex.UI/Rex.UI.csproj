@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MainFormController.cs" />
+    <Compile Include="Controls\DirectTableNode.cs" />
     <Compile Include="Controls\TableCollectionNode.cs" />
     <Compile Include="Controls\TableNode.cs" />
     <Compile Include="IMainForm.cs" />

@@ -12,6 +12,8 @@ namespace Rex.Common
 
         Row GetRow(string tableName, KeySet primaryKey);
 
+        IEnumerable<Row> GetRows(string[] path, List<TableColumnPair> relations, KeySet primaryKeySet, IEnumerable<string> targetTablePrimaryCols);
+
         IEnumerable<Row> GetRows(string tableName, KeySet foreignKey);
 
         ConnectionProperties Connect();

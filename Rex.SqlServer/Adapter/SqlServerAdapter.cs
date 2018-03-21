@@ -56,5 +56,16 @@ namespace Rex.SqlServer.Adapter
             var rows = _queryExecuter.Execute(DataQueries.GetRowQuery(tableName, foreignKey as ForeignKeySet));
             return _recordParser.Parse(rows);
         }
+
+        public IEnumerable<Row> GetRows(string[] path, List<TableColumnPair> relations, KeySet primaryKeySet, IEnumerable<string> targetTablePrimaryCols)
+        {
+            var queryBuilder = new QueryBuilder();
+            var query = queryBuilder.BuildInnerJoinQuery(path, relations, primaryKeySet, targetTablePrimaryCols);
+
+            var rows = _queryExecuter.Execute(query);
+
+            return _recordParser.Parse(rows);
+        }
+
     }
 }

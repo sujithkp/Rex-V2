@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\ConnectionStringPersistor.cs" />
+    <Compile Include="Business\QueryBuilder.cs" />
     <Compile Include="Business\QueryExecuter.cs" />
     <Compile Include="Business\RecordParser.cs" />
     <Compile Include="Business\ReferentialConstraintParser.cs" />

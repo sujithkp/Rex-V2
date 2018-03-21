@@ -83,18 +83,21 @@ namespace Rex.Business
             return _tableGraph.FindPath(source, target);
         }
 
-        public IEnumerable<IEnumerable<string>> FindPaths (string source, string target)
+        public IEnumerable<IEnumerable<string>> FindPaths(string source, string target)
         {
             return _tableGraph.FindPaths(source, target);
         }
 
-        public IEnumerable<Row> GetRows(string table, string[] path, KeySet primaryKeySet)
+        public IEnumerable<Row> GetUniqueRows(string table, string[] path, KeySet primaryKeySet)
         {
-            _schema.GetRelation(path[path.Length - 1], path[path.Length - 2]);
+            var relations = new List<TableColumnPair>();
 
-            return null;
+            for (int i = 0; i < path.Length - 1; i++)
+                relations.AddRange(_schema.GetRelation(path[i], path[i + 1]));
+
+            var rows = _dataAdapter.GetRows(path, relations, primaryKeySet, GetPrimaryColumns(path[path.Length - 1]));
+
+            return rows;
         }
-
-
     }
 }

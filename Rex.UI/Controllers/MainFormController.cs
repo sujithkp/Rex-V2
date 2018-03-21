@@ -29,30 +29,27 @@ namespace Rex.UI.Controllers
             this.View = mainForm;
 
             tableSelectorController = new TableSelectorController(store);
-            this.View.OnLinkClick += View_OnLinkClick;
         }
 
-        private void View_OnLinkClick(object sender, LinkEventArgs args)
+        public string GetTargetTable()
         {
-            var targetTable = tableSelectorController.GetUserSelection();
+            return tableSelectorController.GetUserSelection();
+        }
 
+        public IEnumerable<Row> GetDirectRows(TableNode args, string targetTable)
+        {
             if (string.IsNullOrWhiteSpace(targetTable))
-                return;
+                return null;
 
-            var paths = store.FindPaths(args.SelectedTable, targetTable);
+            var paths = store.FindPaths(args.Table, targetTable);
 
             if (paths.Count() == 0)
                 MessageBox.Show("No Path found.");
-            else if (paths.Count() > 1)
-            { }
-            else
-            {
-                var selectedPath = new PathSelectorController().GetUserSelectedPath(paths);
 
-                var targetTableRows = store.GetRows(targetTable, selectedPath, args.PrimaryKeys);
-            }
+            var selectedPath = new PathSelectorController().GetUserSelectedPath(paths);
+            var targetTableRows = store.GetUniqueRows(targetTable, selectedPath, args.keys);
 
-
+            return targetTableRows;
         }
 
         public ConnectionProperties Connect()
