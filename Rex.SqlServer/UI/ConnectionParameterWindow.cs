@@ -19,7 +19,7 @@ namespace Rex.SqlServer.UI
 
         private void btnOk_click(object sender, EventArgs e)
         {
-            var ConnectionStringName = txtConnectionStrinName.Text;
+            var ConnectionStringName = cmbAuthType.Text;
             var ServerName = txtServerName.Text;
             var Username = txtLogin.Text;
             var Password = txtPassword.Text;
@@ -62,6 +62,11 @@ namespace Rex.SqlServer.UI
             }
 
             return false;
+        }
+
+        private void ConnectionParameterWindow_Load(object sender, EventArgs e)
+        {
+            cmbAuthType.SelectedIndex = 0;
         }
     }
 }

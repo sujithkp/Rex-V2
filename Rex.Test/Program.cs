@@ -9,8 +9,156 @@ namespace Rex.Test
 {
     class Program
     {
+
+        private IList<string> SplitSensorsBatteryPairs(string sensorBatteryPair)
+        {
+            var list = new List<string>();
+
+            var insideBatteryPart = false;
+            var sensorPart = new StringBuilder();
+
+            for (int i = 0; i < sensorBatteryPair.Length; i++)
+            {
+                char currChar = sensorBatteryPair[i];
+
+                if (currChar == '{')
+                {
+                    insideBatteryPart = true;
+                    sensorPart.Append(sensorBatteryPair[i]);
+
+                    continue;
+                }
+
+                if (currChar == '}')
+                {
+                    insideBatteryPart = false;
+                    sensorPart.Append(sensorBatteryPair[i]);
+
+                    list.Add(sensorPart.ToString().Trim());
+                    sensorPart.Clear();
+                    continue;
+                }
+
+                if (currChar == ',' && !insideBatteryPart && sensorPart.ToString().Trim().Length > 0)
+                {
+                    list.Add(sensorPart.ToString().Trim());
+
+                    sensorPart.Clear();
+                    continue;
+                }
+
+                if (currChar == ',' && insideBatteryPart)
+                {
+                    sensorPart.Append(currChar);
+                }
+
+                if (currChar != ',')
+                    sensorPart.Append(currChar);
+
+            }
+
+            if (sensorPart.ToString().Trim().Length > 0)
+                list.Add(sensorPart.ToString().Trim());
+
+            return list;
+        }
+
+        private string ParseSensorFrom(string sensorBatteryPair)
+        {
+            var index = sensorBatteryPair.IndexOf('{');
+
+            if (index == -1)
+                index = sensorBatteryPair.Length;
+
+            return sensorBatteryPair.Substring(0, index).Trim();
+        }
+
+        private IList<string> ParseBatteriesFrom(string sensorBatteryPair)
+        {
+            IList<string> batteries = new List<string>();
+
+            int startIndex = sensorBatteryPair.IndexOf('{');
+
+            if (startIndex == -1)
+                return batteries;
+
+            int endIndex = sensorBatteryPair.IndexOf('}');
+
+            if (endIndex == -1)
+                endIndex = sensorBatteryPair.Length - 1;
+
+            batteries = sensorBatteryPair.Substring(startIndex + 1, endIndex - startIndex - 1).Split(',').Select(x => x.Trim()).ToList();
+
+            return batteries;
+        }
+
+        private IDictionary<string, IList<string>> GetManuallyCalibratedSensorBatteryPair()
+        {
+            var dictionary = new Dictionary<string, IList<string>>();
+
+            var manuallyCalibratedSensors = "17124975-8M, 17124975-NM{17131038-4, 17131038-5, 17131046-6} ,17124975-AM";
+
+            var sensorBatteryPairs = SplitSensorsBatteryPairs(manuallyCalibratedSensors);
+
+            foreach (var sensorBatteryPair in sensorBatteryPairs)
+            {
+                string sensor = ParseSensorFrom(sensorBatteryPair);
+                IList<string> batteries = ParseBatteriesFrom(sensorBatteryPair);
+
+                dictionary.Add(sensor, batteries);
+            }
+
+            return dictionary;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         static void Main(string[] args)
         {
+            new Program().GetManuallyCalibratedSensorBatteryPair();
+
+
+
+
+
+
+
+
+
+
+
             var store = new DataStore();
             store.Connect();
 
