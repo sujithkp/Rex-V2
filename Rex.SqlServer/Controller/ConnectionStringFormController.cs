@@ -6,18 +6,18 @@ namespace Rex.SqlServer.Controller
 {
     public class ConnectionStringFormController
     {
-        public ConnectionParameterWindow View;
+        public IConnectionStringForm View;
 
         private ConnectionStringPersistor _connectionStringPersistor;
 
         public ConnectionStringFormController()
         {
             _connectionStringPersistor = new ConnectionStringPersistor();
+            this.View = new ConnectionParameterWindow(this);
         }
 
         public string GetConnectionString()
         {
-            this.View = new ConnectionParameterWindow(this);
             var connectionString = this.View.GetConnectionString();
 
             if (connectionString == null)

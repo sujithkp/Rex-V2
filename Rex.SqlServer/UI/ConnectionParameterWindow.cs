@@ -8,7 +8,7 @@ using Rex.SqlServer.Connection;
 
 namespace Rex.SqlServer.UI
 {
-    public partial class ConnectionParameterWindow : Form
+    public partial class ConnectionParameterWindow : Form, IConnectionStringForm
     {
         public ConnectionParameterWindow(ConnectionStringFormController controller)
         {
@@ -39,6 +39,30 @@ namespace Rex.SqlServer.UI
 
             return null;
         }
+
+        private bool Verify(string connectionString)
+        {
+            var sqlClient = new System.Data.SqlClient.SqlConnection(connectionString);
+
+            try
+            {
+                sqlClient.Open();
+
+                if (sqlClient.State != System.Data.ConnectionState.Open)
+                    throw new Exception("Could not connect.");
+
+                sqlClient.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return false;
+        }
+
+        #region Event Handlers
 
         private void btnOk_click(object sender, EventArgs e)
         {
@@ -75,28 +99,6 @@ namespace Rex.SqlServer.UI
 
             this.DialogResult = DialogResult.Cancel;
             this.Close();
-        }
-
-        private bool Verify(string connectionString)
-        {
-            var sqlClient = new System.Data.SqlClient.SqlConnection(connectionString);
-
-            try
-            {
-                sqlClient.Open();
-
-                if (sqlClient.State != System.Data.ConnectionState.Open)
-                    throw new Exception("Could not connect.");
-
-                sqlClient.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            return false;
         }
 
         private void ConnectionParameterWindow_Load(object sender, EventArgs e)
@@ -161,5 +163,7 @@ namespace Rex.SqlServer.UI
         {
             txtPassword.SelectAll();
         }
+
+        #endregion
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Business\ReferentialConstraintParser.cs" />
     <Compile Include="ConnectionStringBuilder.cs" />
     <Compile Include="Controller\ConnectionStringFormController.cs" />
+    <Compile Include="UI\IConnectionStringForm.cs" />
     <Compile Include="Data\SqlServerReferentialContraint.cs" />
     <Compile Include="Connection\SQLConnectionProperties.cs" />
     <Compile Include="Program.cs" />
