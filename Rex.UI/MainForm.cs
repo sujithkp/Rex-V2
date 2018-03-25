@@ -192,6 +192,9 @@ namespace Rex.UI
 
             var targettable = this.controller.GetTargetTable();
 
+            if (targettable == null)
+                return;
+
             var rows = this.controller.GetDirectRows(selectedNode, targettable);
 
             var dt = new DirectTableNode(targettable);
