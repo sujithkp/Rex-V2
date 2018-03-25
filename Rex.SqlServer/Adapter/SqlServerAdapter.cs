@@ -48,7 +48,7 @@ namespace Rex.SqlServer.Adapter
         public Row GetRow(string tableName, KeySet primaryKey)
         {
             var row = _queryExecuter.Execute(DataQueries.GetRowQuery(tableName, primaryKey as PrimaryKeySet));
-            return _recordParser.Parse(row).First();
+            return _recordParser.Parse(row).FirstOrDefault();
         }
 
         public IEnumerable<Row> GetRows(string tableName, KeySet foreignKey)

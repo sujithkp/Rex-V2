@@ -32,7 +32,9 @@ namespace Rex.UI
             treeView1.BeforeExpand += TreeView1_BeforeExpand;
             treeView1.BeforeSelect += TreeView1_BeforeSelect;
             treeView1.AfterSelect += TreeView1_AfterSelect;
-        }
+
+            splitContainer1.SplitterDistance = 350;
+                }
 
         private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -54,6 +56,8 @@ namespace Rex.UI
                 dataGridView1.Columns.Add("Value", "Value");
 
                 var row = task.Result;
+                if (row == null)
+                    return;
 
                 foreach (var col in row.Columns)
                     dataGridView1.Rows.Add(new string[] { col.Name, col.Value });
@@ -210,8 +214,6 @@ namespace Rex.UI
 
                 dt.Nodes.Add(new TableNode(targettable, targettable, primaryKeys));
             }
-
-
         }
     }
 }
