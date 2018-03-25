@@ -45,7 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\ConnectionStringPersistor.cs" />
+    <Compile Include="Connection\ConnectionStore.cs" />
+    <Compile Include="Connection\ConnectionStringPersistor.cs" />
     <Compile Include="Business\QueryBuilder.cs" />
     <Compile Include="Business\QueryExecuter.cs" />
     <Compile Include="Business\RecordParser.cs" />
@@ -53,7 +54,7 @@
     <Compile Include="ConnectionStringBuilder.cs" />
     <Compile Include="Controller\ConnectionStringFormController.cs" />
     <Compile Include="Data\SqlServerReferentialContraint.cs" />
-    <Compile Include="Lib\ConnectorDialogResult.cs" />
+    <Compile Include="Connection\SQLConnectionProperties.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Adapter\SqlServerAdapter.cs" />

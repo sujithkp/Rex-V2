@@ -2,6 +2,7 @@
 using Rex.Common.Connection;
 using Rex.Common.Data;
 using Rex.SqlServer.Business;
+using Rex.SqlServer.Connection;
 using Rex.SqlServer.Controller;
 using Rex.SqlServer.Store;
 using System;
@@ -30,8 +31,7 @@ namespace Rex.SqlServer.Adapter
             _refparser = new ReferentialConstraintParser();
             _recordParser = new RecordParser();
 
-            var connectionStringBuilder = new System.Data.SqlClient.SqlConnectionStringBuilder(connectionString);
-            return new ConnectionProperties(connectionStringBuilder.DataSource + " " + connectionStringBuilder.InitialCatalog);
+            return new SQLConnectionProperties(connectionString);
         }
 
         public IEnumerable<string> GetAllTables()

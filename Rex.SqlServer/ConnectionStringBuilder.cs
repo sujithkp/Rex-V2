@@ -1,14 +1,28 @@
-﻿namespace Rex.SqlServer
+﻿using System.Data.SqlClient;
+
+namespace Rex.SqlServer
 {
     internal class ConnectionStringBuilder
     {
-        //private string connectionStringFormat = "Data Source={0};Initial Catalog={1};Persist Security Info=True;Integrated Security=SSPI";
-
-        private string connectionStringFormat = "Data Source={0};Initial Catalog={1};Persist Security Info=True;User ID={2};Password={3}";
-
         public string Build(string server, string initialCatalog, string username, string password)
         {
-            return string.Format(connectionStringFormat, server, initialCatalog, username, password);
+            var connStrBuilder = new SqlConnectionStringBuilder();
+            connStrBuilder.DataSource = server;
+            connStrBuilder.InitialCatalog = initialCatalog;
+            connStrBuilder.UserID = username;
+            connStrBuilder.Password = password;
+
+            return connStrBuilder.ConnectionString;
+        }
+
+        public string Build(string server, string initialCatalog)
+        {
+            var connStrBuilder = new SqlConnectionStringBuilder();
+            connStrBuilder.DataSource = server;
+            connStrBuilder.IntegratedSecurity = true;
+            connStrBuilder.InitialCatalog = initialCatalog;
+
+            return connStrBuilder.ConnectionString;
         }
     }
 }

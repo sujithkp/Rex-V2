@@ -1,28 +1,36 @@
-﻿using Rex.SqlServer.Business;
+﻿using Rex.SqlServer.Connection;
 using Rex.SqlServer.UI;
+using System.Collections.Generic;
 
 namespace Rex.SqlServer.Controller
 {
     public class ConnectionStringFormController
     {
+        public ConnectionParameterWindow View;
+
+        private ConnectionStringPersistor _connectionStringPersistor;
+
+        public ConnectionStringFormController()
+        {
+            _connectionStringPersistor = new ConnectionStringPersistor();
+        }
+
         public string GetConnectionString()
         {
-            var form = new ConnectionParameterWindow();
-            var dialogResult = form.ShowDialog();
+            this.View = new ConnectionParameterWindow(this);
+            var connectionString = this.View.GetConnectionString();
 
-            var connectionString = form.ConnectionString;
             if (connectionString == null)
                 return null;
 
-            var connectionStringName = form.ConnectionStringName;
-
-            if (dialogResult != System.Windows.Forms.DialogResult.OK)
-                return null;
-
-            new ConnectionStringPersistor().Persist(connectionStringName, connectionString.DataSource,
-                connectionString.UserID, connectionString.Password);
+            _connectionStringPersistor.Persist(new SQLConnectionProperties(connectionString.ConnectionString));
 
             return connectionString.ConnectionString;
+        }
+
+        public IList<SQLConnectionProperties> GetPersistedConnections()
+        {
+            return _connectionStringPersistor.LoadConnections();
         }
     }
 }

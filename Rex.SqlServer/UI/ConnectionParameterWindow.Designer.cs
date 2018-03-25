@@ -32,17 +32,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtServerName = new System.Windows.Forms.TextBox();
-            this.txtLogin = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.cmbAuthType = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtDatabase = new System.Windows.Forms.ComboBox();
+            this.cmbDatabase = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.cmbDataSource = new System.Windows.Forms.ComboBox();
+            this.cmbUserId = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -85,47 +85,31 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Password : ";
             // 
-            // txtServerName
-            // 
-            this.txtServerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtServerName.Location = new System.Drawing.Point(168, 75);
-            this.txtServerName.Name = "txtServerName";
-            this.txtServerName.Size = new System.Drawing.Size(233, 22);
-            this.txtServerName.TabIndex = 1;
-            this.txtServerName.Text = "SVRSQL1";
-            // 
-            // txtLogin
-            // 
-            this.txtLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLogin.Location = new System.Drawing.Point(168, 145);
-            this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(233, 22);
-            this.txtLogin.TabIndex = 3;
-            this.txtLogin.Text = "MdomUser";
-            // 
             // txtPassword
             // 
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(168, 176);
+            this.txtPassword.Location = new System.Drawing.Point(167, 176);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(233, 22);
-            this.txtPassword.TabIndex = 4;
-            this.txtPassword.Text = "HHeLiBe1";
+            this.txtPassword.TabIndex = 3;
+            this.txtPassword.GotFocus += new System.EventHandler(this.txtPassword_GotFocus);
             // 
             // cmbAuthType
             // 
             this.cmbAuthType.Cursor = System.Windows.Forms.Cursors.Default;
             this.cmbAuthType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAuthType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbAuthType.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbAuthType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAuthType.FormattingEnabled = true;
             this.cmbAuthType.Items.AddRange(new object[] {
             "SQL Server Authentication",
             "Windows Authentication"});
             this.cmbAuthType.Location = new System.Drawing.Point(167, 112);
             this.cmbAuthType.Name = "cmbAuthType";
-            this.cmbAuthType.Size = new System.Drawing.Size(233, 24);
-            this.cmbAuthType.TabIndex = 2;
+            this.cmbAuthType.Size = new System.Drawing.Size(233, 23);
+            this.cmbAuthType.TabIndex = 1;
+            this.cmbAuthType.SelectedIndexChanged += new System.EventHandler(this.cmbAuthType_SelectedIndexChanged);
             // 
             // btnOk
             // 
@@ -133,7 +117,7 @@
             this.btnOk.Location = new System.Drawing.Point(221, 271);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 6;
+            this.btnOk.TabIndex = 5;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_click);
@@ -144,7 +128,7 @@
             this.btnCancel.Location = new System.Drawing.Point(318, 271);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -167,15 +151,15 @@
             this.label6.Size = new System.Drawing.Size(401, 1);
             this.label6.TabIndex = 11;
             // 
-            // txtDatabase
+            // cmbDatabase
             // 
-            this.txtDatabase.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDatabase.FormattingEnabled = true;
-            this.txtDatabase.Location = new System.Drawing.Point(168, 214);
-            this.txtDatabase.Name = "txtDatabase";
-            this.txtDatabase.Size = new System.Drawing.Size(232, 24);
-            this.txtDatabase.TabIndex = 5;
-            this.txtDatabase.Text = "Manufacturing";
+            this.cmbDatabase.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDatabase.FormattingEnabled = true;
+            this.cmbDatabase.Location = new System.Drawing.Point(167, 214);
+            this.cmbDatabase.Name = "cmbDatabase";
+            this.cmbDatabase.Size = new System.Drawing.Size(232, 23);
+            this.cmbDatabase.TabIndex = 4;
+            this.cmbDatabase.DropDown += new System.EventHandler(this.txtDatabase_DropDown);
             // 
             // label7
             // 
@@ -195,6 +179,25 @@
             this.label8.Size = new System.Drawing.Size(401, 1);
             this.label8.TabIndex = 14;
             // 
+            // cmbDataSource
+            // 
+            this.cmbDataSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDataSource.FormattingEnabled = true;
+            this.cmbDataSource.Location = new System.Drawing.Point(167, 77);
+            this.cmbDataSource.Name = "cmbDataSource";
+            this.cmbDataSource.Size = new System.Drawing.Size(233, 23);
+            this.cmbDataSource.TabIndex = 0;
+            // 
+            // cmbUserId
+            // 
+            this.cmbUserId.FormattingEnabled = true;
+            this.cmbUserId.Location = new System.Drawing.Point(167, 147);
+            this.cmbUserId.Name = "cmbUserId";
+            this.cmbUserId.Size = new System.Drawing.Size(233, 21);
+            this.cmbUserId.TabIndex = 2;
+            this.cmbUserId.DropDown += new System.EventHandler(this.cmbUserId_DropDown);
+            this.cmbUserId.SelectedIndexChanged += new System.EventHandler(this.cmbUserId_SelectedIndexChanged);
+            // 
             // ConnectionParameterWindow
             // 
             this.AcceptButton = this.btnOk;
@@ -202,26 +205,28 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(413, 305);
+            this.Controls.Add(this.cmbUserId);
+            this.Controls.Add(this.cmbDataSource);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtDatabase);
+            this.Controls.Add(this.cmbDatabase);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.cmbAuthType);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtLogin);
-            this.Controls.Add(this.txtServerName);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "ConnectionParameterWindow";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connect to Server";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConnectionParameterWindow_FormClosing);
             this.Load += new System.EventHandler(this.ConnectionParameterWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -234,16 +239,16 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtServerName;
-        private System.Windows.Forms.TextBox txtLogin;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.ComboBox cmbAuthType;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox txtDatabase;
+        private System.Windows.Forms.ComboBox cmbDatabase;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cmbDataSource;
+        private System.Windows.Forms.ComboBox cmbUserId;
     }
 }
