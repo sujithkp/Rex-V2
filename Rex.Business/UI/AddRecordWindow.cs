@@ -26,6 +26,10 @@ namespace Rex.Business.UI
         {
             this.comboBox1.Items.Clear();
             this.comboBox1.Items.AddRange(tables.OrderBy(x => x).ToArray());
+
+            if (this.comboBox1.Items.Count > 0)
+                this.comboBox1.SelectedIndex = 0;
+
             var result = this.ShowDialog();
 
             if (result != DialogResult.OK)
