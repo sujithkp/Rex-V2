@@ -20,9 +20,10 @@ namespace Rex.SqlServer.UI
 
             _connections.Select(x => x.DataSource).Distinct().ToList().ForEach(x => cmbDataSource.Items.Add(x));
 
-            cmbDataSource.SelectedIndex = 0;
-            cmbDataSource.SelectAll();
+            if (cmbDataSource.Items.Count > 0)
+                cmbDataSource.SelectedIndex = 0;
 
+            cmbDataSource.SelectAll();
             cmbDataSource.Focus();
         }
 
@@ -131,7 +132,7 @@ namespace Rex.SqlServer.UI
 
             var dataSource = cmbDataSource.Text.Trim();
 
-            _connections.Where(x => x.DataSource.ToLower().Equals(dataSource))
+            _connections.Where(x => x.DataSource.ToLower().Equals(dataSource.ToLower()))
                 .Select(x => x.UserId).ToList()
                 .ForEach(x => cmbUserId.Items.Add(x));
         }

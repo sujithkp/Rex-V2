@@ -43,6 +43,9 @@ namespace Rex.SqlServer.Connection
                 if (!Directory.Exists(appDataPath))
                     Directory.CreateDirectory(appDataPath);
 
+                if (!File.Exists(appDataPath + "\\Connections.txt"))
+                    return new List<SQLConnectionProperties>();
+
                 var streamReader = new StreamReader(appDataPath + "\\Connections.txt");
                 XmlSerializer serializer = new XmlSerializer(typeof(ConnectionStore));
                 _store = serializer.Deserialize(streamReader) as ConnectionStore;
