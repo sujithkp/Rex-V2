@@ -141,7 +141,7 @@ namespace Rex.SqlServer.UI
         {
             cmbDatabase.Items.Clear();
 
-            var dataSource = cmbDataSource.Text.Trim();
+            var dataSource = cmbDataSource.Text.Trim().ToLower();
 
             _connections.Where(x => x.DataSource.ToLower().Equals(dataSource))
                 .Select(x => x.DataBase).ToList()
@@ -150,7 +150,7 @@ namespace Rex.SqlServer.UI
 
         private void cmbUserId_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var dataSource = cmbDataSource.Text.Trim();
+            var dataSource = cmbDataSource.Text.Trim().ToLower();
             var userId = cmbUserId.Text.Trim();
 
             var password = _connections.Where(x => x.DataSource.ToLower().Equals(dataSource) && x.UserId.Equals(userId))
