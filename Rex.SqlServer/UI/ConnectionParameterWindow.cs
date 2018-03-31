@@ -166,5 +166,19 @@ namespace Rex.SqlServer.UI
         }
 
         #endregion
+
+        private void cmbDataSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var serverName = cmbDataSource.Text.ToLower();
+            cmbAuthType.SelectedIndex = 0;
+
+            if (!_connections.Any(x => x.DataSource.ToLower().Equals(serverName) && x.IntegratedSecurity == false))
+                cmbAuthType.SelectedIndex = 1;
+        }
+
+        private void cmbDataSource_Leave(object sender, EventArgs e)
+        {
+            cmbDataSource_SelectedIndexChanged(sender, e);
+        }
     }
 }

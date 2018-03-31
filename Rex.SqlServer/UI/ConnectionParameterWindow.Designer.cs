@@ -187,6 +187,8 @@
             this.cmbDataSource.Name = "cmbDataSource";
             this.cmbDataSource.Size = new System.Drawing.Size(233, 23);
             this.cmbDataSource.TabIndex = 0;
+            this.cmbDataSource.SelectedIndexChanged += new System.EventHandler(this.cmbDataSource_SelectedIndexChanged);
+            this.cmbDataSource.Leave += new System.EventHandler(this.cmbDataSource_Leave);
             // 
             // cmbUserId
             // 

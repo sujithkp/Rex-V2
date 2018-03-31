@@ -68,6 +68,8 @@ namespace Rex.UI.Controllers
             var nodes = new List<RexNode>();
 
             var dataRow = store.GetRow(tableNode.Table, tableNode.keys);
+            if (dataRow == null)
+                return nodes;
 
             var referencedTables = store.GetTablesReferencedBy(tableNode.Table);
             foreach (var table in referencedTables)
