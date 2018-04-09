@@ -48,11 +48,14 @@ namespace Rex.SqlServer.Business
         private string BuildWhereCriteria(string finalTableAlias, PrimaryKeySet primaryKeys)
         {
             var strBuilder = new StringBuilder();
+            var criterias = new List<string>();
 
             strBuilder.Append("WHERE ");
 
             foreach (var key in primaryKeys.PrimaryKeys)
-                strBuilder.Append(finalTableAlias + "." + key.Name + " = '" + key.Value + "'");
+                criterias.Add(finalTableAlias + "." + key.Name + " = '" + key.Value + "'");
+
+            strBuilder.Append(string.Join(" and ", criterias));
 
             return strBuilder.ToString();
 
