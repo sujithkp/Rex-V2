@@ -14,8 +14,11 @@ namespace Rex.SqlServer.Business
             foreach (DataRow row in table.Rows)
             {
                 var constraintName = row["FK_Name"].ToString();
-                var sourceTable = row["FK_Table"].ToString();
+                var sourceSchema = row["FK_Schema"].ToString();
+                var sourceTable = row["FK_Table"].ToString();                
                 var sourceCol = row["FK_Column"].ToString();
+
+                var targetSchema = row["PK_Schema"].ToString();
                 var targetTable = row["PK_Table"].ToString();
                 var targetCol = row["PK_Column"].ToString();
 
@@ -24,8 +27,8 @@ namespace Rex.SqlServer.Business
 
                 refConstraintsdict[constraintName].Add(new TableColumnPair()
                 {
-                    Source = new TableColumn(sourceTable, sourceCol),
-                    Target = new TableColumn(targetTable, targetCol)
+                    Source = new TableColumn(sourceTable, sourceCol, sourceSchema),
+                    Target = new TableColumn(targetTable, targetCol, targetSchema)
                 });
             }
 
